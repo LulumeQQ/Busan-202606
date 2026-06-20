@@ -241,13 +241,13 @@
                     title: '旅遊行李清單',
                     icon: 'fa-suitcase-rolling',
                     color: 'text-blue-500',
-                    items: '護照x2、衣服3件x2、防曬乳、帽子、太陽眼鏡、口罩、運動鞋、涼鞋、內衣褲、襪子、毛巾、牙刷、牙膏、洗面乳、護髮乳、手機、充電器、行動電源'
+                    items: ['護照x2', '衣服3件x2', '防曬乳', '帽子', '太陽眼鏡', '口罩', '運動鞋', '涼鞋', '內衣褲', '襪子', '毛巾', '牙刷', '牙膏', '洗面乳', '護髮乳', '手機', '充電器', '行動電源']
                 },
                 shopping: {
                     title: '購物清單',
                     icon: 'fa-bag-shopping',
                     color: 'text-pink-500',
-                    items: '面膜、化妝品、護膚品、零食、伴手禮、衣服、鞋子'
+                    items: ['面膜', '化妝品', '護膚品', '零食', '伴手禮', '衣服', '鞋子']
                 }
             }
         };
@@ -474,9 +474,9 @@
         }
 
         function calculate() {
-            const input = document.getElementById('calc-input').value.replace(/\\s/g, '');
+            const input = document.getElementById('calc-input').value.replace(/\s/g, '');
             try {
-                if (!input || !/^[0-9+\\-*/().]+$/.test(input)) throw new Error('invalid');
+                if (!input || !/^[0-9+\-*/().]+$/.test(input)) throw new Error('invalid');
                 const res = new Function('return (' + input + ')')();
                 if (typeof res !== 'number' || !isFinite(res)) throw new Error('invalid');
                 document.getElementById('calc-result').innerText = '₩ ' + res.toLocaleString();
