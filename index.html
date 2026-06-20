@@ -211,17 +211,17 @@
                 ],
                 d2: [
                     { time: '08:00', title: '早餐', desc: '廣安里附近', type: 'food' },
-                    { time: '10:00', title: '膠囊列車-尾浦站', desc: '交通方式：計程車25min (費用約9900韓元/196.36台幣)', type: 'transport', addr: 'https://naver.me/xLNUkR4X' },
+                    { time: '10:00', title: '膠囊列車-尾浦站', desc: '交通(廣安里飯店 - 膠囊列車尾浦站):\n計程車25min (費用約9900韓元/196.36台幣)', type: 'transport', addr: 'https://naver.me/xLNUkR4X' },
                     { time: '11:30 - 12:00', title: '膠囊列車(尾浦站 - 青沙浦站)', desc: '要出示電子QRcode', type: 'play', highlight: true },
-                    { time: '無法預估', title: '海岸列車(清沙浦站 - 踏石觀景台站)', desc: '交通方式：海岸列車(釜山pass)', type: 'transport' },
-                    { time: '無法預估', title: '青沙浦天空步道', desc: '', type: 'play', highlight: true },
-                    { time: '無法預估', title: '海岸列車(踏石觀景台站 - 松亭站)', desc: '交通方式：海岸列車(釜山pass)', type: 'transport' },
-                    { time: '14:00', title: '海東龍宮寺', desc: '交通方式：計程車13min(費用約6100韓元/120.99台幣)', type: 'play', addr: 'https://naver.me/FpwTFMtm' },
-                    { time: '15:30', title: '海岸列車 - 松亭站', desc: '交通方式：計程車13min(費用約6100韓元/120.99台幣)', type: 'transport', addr: 'https://naver.me/GfrOubPS' },
-                    { time: '無法預估', title: '海岸列車(松亭站 - 尾浦站)', desc: '交通方式：海岸列車(釜山pass)', type: 'transport' },
-                    { time: '無法預估', title: '釜山 X the SKY', desc: '交通方式：走路 2min', type: 'play', highlight: true, addr: 'https://naver.me/5FDIRY4H' },
-                    { time: '18:00', title: '廣安里-無人機表演(20:00)', desc: '交通方式：計程車31min (費用約9600韓元/190.41台幣)', type: 'transport', addr: 'https://naver.me/F4W5O9gO' },
-                    { time: '21:00', title: '住宿', desc: '交通方式：走路12min', type: 'hotel', addr: 'https://naver.me/F5sw0Rir' }
+                    { time: '', title: '海岸列車(清沙浦站 - 踏石觀景台站)', desc: '交通方式：海岸列車(釜山pass)', type: 'transport' },
+                    { time: '', title: '青沙浦天空步道', desc: '', type: 'play', highlight: true },
+                    { time: '', title: '海岸列車(踏石觀景台站 - 松亭站)', desc: '交通方式：海岸列車(釜山pass)', type: 'transport' },
+                    { time: '14:00', title: '海東龍宮寺', desc: '交通(海岸列車松亭站 - 海東龍宮寺):\n計程車13min(費用約6100韓元/120.99台幣)', type: 'play', addr: 'https://naver.me/FpwTFMtm' },
+                    { time: '15:30', title: '海岸列車 - 松亭站', desc: '交通(海東龍宮寺 - 海岸列車松亭站 ):\n計程車13min(費用約6100韓元/120.99台幣)', type: 'transport', addr: 'https://naver.me/GfrOubPS' },
+                    { time: '', title: '海岸列車(松亭站 - 尾浦站)', desc: '交通方式：海岸列車(釜山pass)', type: 'transport' },
+                    { time: '', title: '釜山 X the SKY', desc: '交通(海岸列車尾浦站 -  釜山 X the SKY):\n走路 2min', type: 'play', highlight: true, addr: 'https://naver.me/5FDIRY4H' },
+                    { time: '18:00', title: '廣安里-無人機表演(20:00)', desc: '交通(釜山 X the SKY - 廣安里-無人機 ):\n計程車31min ( 費用約9600韓元/190.41台幣)', type: 'transport', addr: 'https://naver.me/F4W5O9gO' },
+                    { time: '21:00', title: '住宿', desc: '交通(廣安里-無人機 -  廣安里飯店):\n走路 12min', type: 'hotel', addr: 'https://naver.me/F5sw0Rir' }
                 ],
                 d3: [
                     { time: '09:00', title: '早餐', desc: 'Airbnb 周邊', type: 'food' },
@@ -401,7 +401,7 @@
                 return `
                 <div class="flex gap-4 group animate-fade-in" style="animation-delay: ${index * 0.05}s">
                     <div class="flex flex-col items-center min-w-[3rem] pt-2">
-                        <span class="text-xs font-bold font-mono text-gray-500 mb-1">${item.time || '--:--'}</span>
+                        <span class="text-xs font-bold font-mono text-gray-500 mb-1">${item.time || ''}</span>
                         <div class="w-3.5 h-3.5 rounded-full bg-gray-200 border-2 border-white shadow-sm z-10 timeline-dot" id="dot-${uniqueId}"></div>
                         ${index !== tripData.itinerary[day].length - 1 ? '<div class="w-0.5 flex-1 bg-gray-200 my-1"></div>' : ''}
                     </div>
@@ -411,7 +411,7 @@
                             <div class="flex justify-between items-start">
                                 <div>
                                     <h4 class="font-bold text-base text-muji-text ${item.highlight ? 'text-ocean-blue' : ''}">${item.title}</h4>
-                                    <p class="text-xs text-gray-500 mt-2 leading-relaxed">${item.desc}</p>
+                                    <p class="text-xs text-gray-500 mt-2 leading-relaxed whitespace-pre-wrap">${item.desc}</p>
                                 </div>
                                 <i class="fa-solid ${iconClass} ${highlightClass} opacity-20 text-2xl absolute top-3 right-3"></i>
                             </div>
