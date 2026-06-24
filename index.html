@@ -142,12 +142,43 @@
             background-color: #fee2e2;
         }
 
-        table { width: 100%; border-collapse: collapse; font-size: 12px; }
-        th, td { border: 1px solid #e5e7eb; padding: 8px 4px; text-align: center; }
-        th { background-color: #0a66c2; color: white; font-weight: bold; }
-        tr:nth-child(even) { background-color: #f9fafb; }
-        .route-cell { text-align: left; padding: 8px; }
-        .subtotal-row { background-color: #e8f4ff; font-weight: bold; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        th, td {
+            border: 1px solid #e5e7eb;
+            padding: 8px 4px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #0a66c2;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9fafb;
+        }
+
+        .route-cell {
+            text-align: left;
+            padding: 8px;
+        }
+
+        .subtotal-row {
+            background-color: #e8f4ff;
+            font-weight: bold;
+        }
+
+        .total-row {
+            background-color: #0a66c2;
+            color: white;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body class="flex flex-col h-screen overflow-hidden text-sm">
@@ -170,23 +201,23 @@
 
     <nav class="bg-card-white/95 backdrop-blur-md border-t border-gray-100 fixed bottom-0 w-full pb-safe z-30 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
         <div class="flex justify-around items-center h-16 max-w-md mx-auto overflow-x-auto no-scrollbar px-1">
-            <button onclick="router('plan')" class="nav-btn group flex flex-col items-center flex-1" id="btn-plan">
+            <button onclick="router('plan')" class="nav-btn group flex flex-col items-center flex-1 min-w-fit px-2" id="btn-plan">
                 <div class="nav-icon text-lg mb-1 text-gray-400 group-hover:text-ocean-blue transition-colors"><i class="fa-solid fa-calendar-days"></i></div>
                 <span class="text-[10px] text-gray-500 font-bold">行程</span>
             </button>
-            <button onclick="router('guide')" class="nav-btn group flex flex-col items-center flex-1" id="btn-guide">
+            <button onclick="router('guide')" class="nav-btn group flex flex-col items-center flex-1 min-w-fit px-2" id="btn-guide">
                 <div class="nav-icon text-lg mb-1 text-gray-400 group-hover:text-ocean-blue transition-colors"><i class="fa-solid fa-map"></i></div>
-                <span class="text-[10px] text-gray-500 font-bold">指南</span>
+                <span class="text-[10px] text-gray-500 font-bold">美食與購物</span>
             </button>
-            <button onclick="router('taxi')" class="nav-btn group flex flex-col items-center flex-1" id="btn-taxi">
+            <button onclick="router('taxi')" class="nav-btn group flex flex-col items-center flex-1 min-w-fit px-2" id="btn-taxi">
                 <div class="nav-icon text-lg mb-1 text-gray-400 group-hover:text-ocean-blue transition-colors"><i class="fa-solid fa-car-side"></i></div>
-                <span class="text-[10px] text-gray-500 font-bold">車費</span>
+                <span class="text-[10px] text-gray-500 font-bold">計程車</span>
             </button>
-            <button onclick="router('wallet')" class="nav-btn group flex flex-col items-center flex-1" id="btn-wallet">
+            <button onclick="router('wallet')" class="nav-btn group flex flex-col items-center flex-1 min-w-fit px-2" id="btn-wallet">
                 <div class="nav-icon text-lg mb-1 text-gray-400 group-hover:text-ocean-blue transition-colors"><i class="fa-solid fa-calculator"></i></div>
                 <span class="text-[10px] text-gray-500 font-bold">記帳</span>
             </button>
-            <button onclick="router('lists')" class="nav-btn group flex flex-col items-center flex-1" id="btn-lists">
+            <button onclick="router('lists')" class="nav-btn group flex flex-col items-center flex-1 min-w-fit px-2" id="btn-lists">
                 <div class="nav-icon text-lg mb-1 text-gray-400 group-hover:text-ocean-blue transition-colors"><i class="fa-solid fa-list-check"></i></div>
                 <span class="text-[10px] text-gray-500 font-bold">清單</span>
             </button>
@@ -223,78 +254,82 @@
                     { time: '15:30', title: '抵達釜山', desc: '金海國際機場', type: 'arrival' },
                     { time: '17:00', title: '住宿：廣安里 Airbnb', desc: '', type: 'hotel', addr: 'https://naver.me/F5sw0Rir' },
                     { time: '17:30', title: '晚餐', desc: '廣安里海鮮鍋', type: 'food', addr: 'https://naver.me/GgWkHCBk', extraLink: 'https://reurl.cc/18da8Q' },
-                    { time: '20:00', title: '閒逛', desc: 'Airbnb樓下有超商', type: 'shop' },
+                    { time: '20:00', title: '閒逛', desc: 'Airbnb樓下有超商', type: 'shopping' },
                     { time: '20:30', title: '廣安里好吃甜筒冰淇淋', desc: '交通(廣安里飯店 - 廣安里好吃甜筒冰淇淋)：\n走路8min', type: 'food', addr: 'https://naver.me/GgWkHCBk' }
                 ],
                 d2: [
                     { time: '08:00', title: '早餐', desc: 'Airbnb樓下超商', type: 'food' },
-                    { time: '10:00', title: '膠囊列車-尾浦站', desc: '交通: 計程車25min (約9900₩)', type: 'transport' },
-                    { time: '10:20', title: '買麵包(選配)', desc: 'Who\'s who Mumu', type: 'food', addr: 'https://naver.me/FjbntCMH', extraLink: 'https://www.instagram.com/reel/DWNmbuREYgt/' },
+                    { time: '10:00', title: '膠囊列車-尾浦站', desc: '交通(廣安里飯店 - 膠囊列車尾浦站):\n計程車25min (費用約9900韓元/196.36台幣)', type: 'transport' },
+                    { time: '10:20', title: '買麵包(選配)', desc: 'Who\'s who Mumu，交通(膠囊列車 - 尾浦站 - Who\'s who Mumu)：\n走路3min', type: 'food', addr: 'https://naver.me/FjbntCMH', extraLink: 'https://www.instagram.com/reel/DWNmbuREYgt/' },
                     { time: '11:15', title: '膠囊列車(尾浦站 - 青沙浦站)', desc: '出示電子QRcode / 預約時間：11:30-12:00', type: 'play', highlight: true },
-                    { time: '13:00', title: '中餐', desc: '青沙補大麥拌飯(烤黃魚)', type: 'food', addr: 'https://naver.me/FYrPoFi6', extraLink: 'https://vivawei.tw/og-ibolibab/' },
-                    { time: '14:00', title: '紀念品店', desc: '買會變色的燒酒杯', type: 'shop', addr: 'https://naver.me/xnrBpk66' },
-                    { time: '', title: '海岸列車(清沙浦站 - 踏石觀景台站)', desc: '釜山pass(紀錄開通時間)', type: 'transport' },
+                    { time: '13:00', title: '中餐', desc: '青沙補大麥拌飯(烤黃魚)，交通(膠囊列車 - 清沙浦站 - 青沙補大麥拌飯(烤黃魚))：\n走路6min', type: 'food', addr: 'https://naver.me/FYrPoFi6', extraLink: 'https://vivawei.tw/og-ibolibab/' },
+                    { time: '14:00', title: '紀念品店', desc: '買會變色的燒酒杯，交通(青沙補大麥拌飯(烤黃魚) - 紀念品店)：\n走路4min', type: 'shopping', addr: 'https://naver.me/xnrBpk66' },
+                    { time: '', title: '海岸列車(清沙浦站 - 踏石觀景台站)', desc: '釜山pass(紀錄釜山pass開通時間)', type: 'transport' },
                     { time: '', title: '青沙浦天空步道', desc: '', type: 'play', highlight: true },
-                    { time: '', title: '海岸列車(踏石觀景台站 - 尾浦站)', desc: '釜山pass', type: 'transport' },
-                    { time: '', title: '釜山 X the SKY', desc: '走路 2min', type: 'play', highlight: true, addr: 'https://naver.me/5FDIRY4H' },
+                    { time: '', title: '海岸列車(踏石觀景台站 - 尾浦站)', desc: '交通方式：海岸列車(釜山pass)', type: 'transport' },
+                    { time: '', title: '釜山 X the SKY', desc: '交通(海岸列車尾浦站 - 釜山 X the SKY):\n走路 2min', type: 'play', highlight: true, addr: 'https://naver.me/5FDIRY4H' },
                     { time: '17:30', title: '晚餐', desc: '海雲台鱈魚湯', type: 'food', addr: 'https://naver.me/Gi0EVli7', extraLink: 'https://www.instagram.com/reel/DPlrXCGiRaw/' },
-                    { time: '19:00', title: '廣安里-無人機表演(20:00)', desc: '交通: 計程車31min (約9600₩)', type: 'transport', addr: 'https://naver.me/F4W5O9gO' },
-                    { time: '21:00', title: '住宿', desc: '走回廣安里飯店', type: 'hotel', addr: 'https://naver.me/F5sw0Rir' }
+                    { time: '19:00', title: '廣安里-無人機表演(20:00)', desc: '交通(釜山 X the SKY - 廣安里-無人機)：\n計程車31min (費用約9600韓元/190.41台幣)', type: 'transport', addr: 'https://naver.me/F4W5O9gO' },
+                    { time: '21:00', title: '住宿', desc: '交通(廣安里-無人機 - 廣安里飯店):\n走路 12min', type: 'hotel', addr: 'https://naver.me/F5sw0Rir' }
                 ],
                 d3: [
                     { time: '08:00', title: '早餐', desc: 'Airbnb樓下超商', type: 'food' },
-                    { time: '09:00', title: '松島海上纜車', desc: '交通: 計程車35min (約19900+1400₩)', type: 'transport', addr: 'https://naver.me/xaTUaQJ3' },
-                    { time: '', title: '松島海上纜車 / 龍宮雲橋', desc: '釜山pass', type: 'play', highlight: true },
-                    { time: '', title: '岩南公園 / 天空步道', desc: '', type: 'play' },
-                    { time: '12:00', title: '中餐', desc: '1969刀削麵', type: 'food', addr: 'https://naver.me/Gowyd26G', extraLink: 'https://www.instagram.com/reel/DVVofADCbty/' },
-                    { time: '14:00', title: '釜山塔', desc: '走路14min', type: 'play', addr: 'https://naver.me/5sudtiJw' },
-                    { time: '15:30', title: 'Arte Museum', desc: '交通: 計程車20min (約8200₩)', type: 'transport', addr: 'https://naver.me/5qLvMBX4' },
-                    { time: '18:00', title: '晚餐', desc: '明星一隻雞', type: 'food', addr: 'https://naver.me/FiPZcZsq', extraLink: 'https://www.youtube.com/watch?v=deob0v8gKxs' },
-                    { time: '20:00', title: '住宿', desc: '交通: 計程車41min', type: 'transport', addr: 'https://naver.me/F5sw0Rir' }
+                    { time: '09:00', title: '松島海上纜車', desc: '交通(廣安里飯店 - 松島海上纜車)：\n計程車35min (費用約19900+Toll1400韓元/422.46台幣)', type: 'transport', addr: 'https://naver.me/xaTUaQJ3' },
+                    { time: '', title: '松島海上纜車', desc: '釜山pass', type: 'play', highlight: true },
+                    { time: '', title: '松島龍宮雲橋', desc: '釜山pass', type: 'play', highlight: true },
+                    { time: '', title: '岩南公園', desc: '', type: 'play' },
+                    { time: '', title: '松島天空步道', desc: '', type: 'play' },
+                    { time: '12:00', title: '中餐', desc: '1969刀削麵，交通(松島海上纜車 - 1969刀削麵)：\n計程車14min (費用約7300韓元/144.79台幣)', type: 'food', addr: 'https://naver.me/Gowyd26G', extraLink: 'https://www.instagram.com/reel/DVVofADCbty/' },
+                    { time: '14:00', title: '釜山塔', desc: '交通(1969刀削麵 - 釜山塔)：\n走路14min', type: 'play', addr: 'https://naver.me/5sudtiJw' },
+                    { time: '15:30', title: 'Arte Museum', desc: '交通(釜山塔 - Arte Museum)：\n計程車20min (費用約8200韓元/162.64台幣)', type: 'transport', addr: 'https://naver.me/5qLvMBX4' },
+                    { time: '18:00', title: '晚餐', desc: '明星一隻雞，交通(Arte Museum - 明星一隻雞)：\n計程車14min (費用約7300韓元/144.79台幣)', type: 'food', addr: 'https://naver.me/FiPZcZsq', extraLink: 'https://www.youtube.com/watch?v=deob0v8gKxs' },
+                    { time: '20:00', title: '住宿', desc: '交通(明星一隻雞 - 廣安里飯店)：\n計程車41min (費用約15500+Toll1400韓元 / 335.19台幣)', type: 'transport', addr: 'https://naver.me/F5sw0Rir' }
                 ],
                 d4: [
                     { time: '07:00', title: '早餐', desc: 'Airbnb樓下超商', type: 'food' },
-                    { time: '08:00', title: '海東龍宮寺', desc: '交通: 計程車24min', type: 'play', highlight: true, addr: 'https://naver.me/FpwTFMtm' },
-                    { time: '09:30', title: 'Skyline釜山斜坡滑車', desc: '釜山pass換票', type: 'play', highlight: true, addr: 'https://naver.me/Fz8EMW61' },
-                    { time: '12:00', title: '中餐', desc: '機張-血蛤定食', type: 'food', addr: 'https://naver.me/xnOT99Fz' },
-                    { time: '13:30', title: '釜山樂天世界', desc: '釜山pass', type: 'play', highlight: true, addr: 'https://naver.me/5CCKqh86' },
-                    { time: '16:00', title: '紅磚校園(樂高)', desc: '釜山pass', type: 'play', addr: 'https://naver.me/xD8qeVWl' },
-                    { time: '19:00', title: '晚餐', desc: '樂天outlet美食街', type: 'food', addr: 'https://naver.me/xjYPqNpb' },
-                    { time: '20:30', title: '住宿', desc: '回飯店', type: 'transport', addr: 'https://naver.me/F5sw0Rir' }
+                    { time: '08:00', title: '海東龍宮寺', desc: '交通(廣安里飯店 - 海東龍宮寺):\n計程車24min (費用約14800韓元+Toll1000/313.38台幣)', type: 'play', highlight: true, addr: 'https://naver.me/FpwTFMtm' },
+                    { time: '09:30', title: 'Skyline釜山斜坡滑車', desc: '釜山pass時間結束前換票(skyline、紅磚校園(樂高)、樂天世界)\n交通(海東龍宮寺 - Skyline釜山斜坡滑車)：\n走路19min', type: 'play', highlight: true, addr: 'https://naver.me/Fz8EMW61' },
+                    { time: '12:00', title: '中餐', desc: '機張-血蛤定食，交通(Skyline釜山斜坡滑車 - 血蛤定食):\n走路11min', type: 'food', addr: 'https://naver.me/xnOT99Fz', extraLink: 'https://www.youtube.com/watch?v=deob0v8gKxs' },
+                    { time: '13:30', title: '釜山樂天世界', desc: '釜山pass\n交通(機張-血蛤定食 - 釜山樂天世界):\n走路17min', type: 'play', highlight: true, addr: 'https://naver.me/5CCKqh86' },
+                    { time: '16:00', title: '紅磚校園(樂高)', desc: '釜山pass\n交通(釜山樂天世界 - 紅磚校園(樂高)):\n走路9min', type: 'play', addr: 'https://naver.me/xD8qeVWl' },
+                    { time: '19:00', title: '晚餐', desc: '樂天outlet美食街，交通(紅磚校園(樂高) - 樂天outlet美食街):\n走路2min', type: 'food', addr: 'https://naver.me/xjYPqNpb' },
+                    { time: '20:30', title: '住宿', desc: '交通(樂天outlet美食街 - 廣安里飯店)：\n計程車24min (費用約13600+Toll1000韓元 /285.87台幣)', type: 'transport', addr: 'https://naver.me/F5sw0Rir' }
                 ],
                 d5: [
                     { time: '', title: '移動日', desc: '', type: 'transport' },
+                    { time: '08:00', title: '早餐', desc: 'Airbnb樓下超商', type: 'food' },
                     { time: '10:30', title: '退房', desc: '11:00之前退房', type: 'hotel' },
-                    { time: '11:00', title: '移動至西面', desc: '交通: 計程車23min', type: 'transport', addr: 'https://naver.me/x2YsHkT6' },
-                    { time: '12:30', title: '中餐', desc: '秀英本家豬肉湯飯', type: 'food', addr: 'https://naver.me/F5swWRTD', extraLink: 'https://www.instagram.com/reel/C-hpXLcvsva/' },
-                    { time: '14:00', title: '田浦咖啡街', desc: '逛街行程', type: 'shop', addr: 'https://naver.me/5sudQX0v' },
-                    { time: '16:00', title: '西面-KPOP唱片行', desc: '幫買唱片', type: 'shop', addr: 'https://naver.me/5MvxtIGO' },
-                    { time: '17:30', title: '晚餐', desc: '西面-肥腸花Pil Muryeop', type: 'food', addr: 'https://naver.me/5QsrSiBG', extraLink: 'https://www.instagram.com/reel/DNiJAKOTNuc/' },
-                    { time: '19:00', title: '住宿', desc: '西面飯店休息', type: 'hotel', addr: 'https://naver.me/x2YsHkT6' }
+                    { time: '11:00', title: '移動至西面', desc: '交通(廣安里飯店 - 西面飯店):\n計程車23min (費用約10300韓元/204.29台幣)', type: 'transport', addr: 'https://naver.me/x2YsHkT6' },
+                    { time: '12:00', title: '西面飯店放行李', desc: '', type: 'hotel' },
+                    { time: '12:30', title: '中餐', desc: '秀英本家豬肉湯飯，交通(西面飯店 - 秀英本家豬肉湯飯):\n走路16min', type: 'food', addr: 'https://naver.me/F5swWRTD', extraLink: 'https://www.instagram.com/reel/C-hpXLcvsva/' },
+                    { time: '14:00', title: '田浦咖啡街', desc: '逛街行程(參考深度導覽)，交通(秀英本家豬肉湯飯 - 田浦咖啡街):\n走路10min', type: 'shop', addr: 'https://naver.me/5sudQX0v' },
+                    { time: '16:00', title: '西面-KPOP唱片行', desc: '幫買唱片，交通(田浦咖啡街西面 - KPOP唱片行):\n走路14min', type: 'shop', addr: 'https://naver.me/5MvxtIGO' },
+                    { time: '17:30', title: '晚餐', desc: '西面-肥腸花Pil Muryeop，交通(KPOP唱片行 - 西面-肥腸花Pil Muryeop):\n走路4min', type: 'food', addr: 'https://naver.me/5QsrSiBG', extraLink: 'https://www.instagram.com/reel/DNiJAKOTNuc/' },
+                    { time: '19:00', title: '住宿', desc: '回飯店休息，交通(西面-肥腸花Pil Muryeop - 西面飯店):\n走路8min', type: 'hotel', addr: 'https://naver.me/x2YsHkT6' }
                 ],
                 d6: [
-                    { time: '08:00', title: '早餐', desc: '西面-EGG DROP', type: 'food', addr: 'https://naver.me/xUZTrpdf' },
-                    { time: '09:00', title: '白淺灘文化村', desc: '交通: 計程車27min', type: 'play', addr: 'https://naver.me/GWW6PBsv' },
-                    { time: '12:00', title: '中餐', desc: 'Burger yo海鮮漢堡', type: 'food', addr: 'https://naver.me/FbVtW0JH', extraLink: 'https://reurl.cc/53YKVn' },
-                    { time: '15:00', title: '三進魚板總店', desc: '交通: 計程車9min', type: 'play', addr: 'https://naver.me/539EkzeT', extraLink: 'https://www.instagram.com/reel/DWEP00qprUt/' },
-                    { time: '17:00', title: '晚餐', desc: '西面-豬肉烤肉', type: 'food', addr: 'https://naver.me/xLNcDiZe', extraLink: 'https://www.facebook.com/watch/?v=2374278089738626' },
-                    { time: '19:00', title: '住宿', desc: '回西面飯店', type: 'hotel', addr: 'https://naver.me/x2YsHkT6' }
+                    { time: '08:00', title: '早餐', desc: '西面-EGG DROP，交通(西面飯店 - 西面-EGG DROP)：\n走路21min', type: 'food', addr: 'https://naver.me/xUZTrpdf' },
+                    { time: '09:00', title: '白淺灘文化村', desc: '交通(西面飯店 - 白淺灘文化村)：\n計程車27min (費用約12400韓元/245.94台幣)', type: 'play', addr: 'https://naver.me/GWW6PBsv' },
+                    { time: '12:00', title: '中餐', desc: 'Burger yo海鮮漢堡，交通(白淺灘文化村 - 海鮮漢堡)：\n走路6min', type: 'food', addr: 'https://naver.me/FbVtW0JH', extraLink: 'https://reurl.cc/53YKVn' },
+                    { time: '15:00', title: '三進魚板總店', desc: '交通(白淺灘文化村 - 三進魚板總店)：\n計程車9min (費用約5000韓元/99.17台幣)\n走路29min', type: 'play', addr: 'https://naver.me/539EkzeT', extraLink: 'https://www.instagram.com/reel/DWEP00qprUt/' },
+                    { time: '17:00', title: '西面-豬肉烤肉', desc: '交通(三進魚板總店 - 西面-豬肉烤肉)：\n計程車21min (費用約10800韓元/214.21台幣)', type: 'food', addr: 'https://naver.me/xLNcDiZe', extraLink: 'https://www.facebook.com/watch/?v=2374278089738626' },
+                    { time: '19:00', title: '住宿', desc: '回飯店休息，交通(西面-豬肉烤肉 - 西面飯店)：\n走路5min', type: 'hotel', addr: 'https://naver.me/x2YsHkT6' }
                 ],
                 d7: [
                     { time: '08:00', title: '早餐', desc: 'Airbnb附近超商', type: 'food' },
-                    { time: '09:00', title: '甘川洞文化村', desc: '交通: 計程車31min', type: 'play', addr: 'https://naver.me/I5wmkLXu' },
-                    { time: '12:00', title: '中餐', desc: '南浦洞-辣炒雞', type: 'food', addr: 'https://naver.me/FwG6Hsod', extraLink: 'https://www.facebook.com/17841402910816573/videos/1918894468894200/' },
-                    { time: '14:00', title: 'BIFF廣場', desc: '糖餅與逛街', type: 'play', addr: 'https://naver.me/FTdzFu0p', extraLink: 'https://lizzzstyle.tw/ajussi-hotteok/' },
-                    { time: '17:00', title: '樂天百貨/超市 光復店', desc: '逛街吃飯', type: 'shop', addr: 'https://naver.me/5FDYu0YL' },
-                    { time: '19:00', title: '住宿', desc: '搭地鐵回西面', type: 'hotel', addr: 'https://naver.me/x2YsHkT6' }
+                    { time: '09:00', title: '甘川洞文化村', desc: '交通(西面飯店 - 甘川洞文化村)：\n計程車31min (費用約13500韓元/267.76台幣)', type: 'play', addr: 'https://naver.me/I5wmkLXu' },
+                    { time: '12:00', title: '中餐', desc: '南浦洞-辣炒雞，交通(甘川洞文化村 - 南浦洞-辣炒雞)：\n計程車14min (費用約6600韓元/130.90台幣)', type: 'food', addr: 'https://naver.me/FwG6Hsod', extraLink: 'https://www.facebook.com/17841402910816573/videos/1918894468894200/' },
+                    { time: '14:00', title: 'BIFF廣場', desc: 'BIFF廣場糖餅與逛街，交通(南浦洞-辣炒雞 - BIFF廣場糖餅)：\n走路1min', type: 'play', addr: 'https://naver.me/FTdzFu0p', extraLink: 'https://lizzzstyle.tw/ajussi-hotteok/' },
+                    { time: '17:00', title: '樂天百貨/超市 光復店', desc: '樂天百貨/超市逛街吃飯，交通( BIFF廣場糖餅 - 樂天百貨/超市 光復店)：\n走路12min', type: 'shop', addr: 'https://naver.me/5FDYu0YL' },
+                    { time: '19:00', title: '住宿', desc: '回飯店休息，交通(樂天百貨/超市 光復店 - 西面飯店)：\n走路+搭地鐵紅色1號線(南浦-西面)30min', type: 'hotel', addr: 'https://naver.me/x2YsHkT6' }
                 ],
                 d8: [
-                    { time: '08:00', title: '早餐', desc: '西面-EGG DROP', type: 'food', addr: 'https://naver.me/xUZTrpdf' },
-                    { time: '10:00', title: '西面大創', desc: '西面大創2號店', type: 'shop', addr: 'https://naver.me/GNJH43rD' },
-                    { time: '12:00', title: '中餐', desc: '烤章魚', type: 'food', addr: 'https://naver.me/FKG1cMLb', extraLink: 'https://www.instagram.com/reel/DYCNyAhzkSw/' },
-                    { time: '14:00', title: '西面Olive Young', desc: 'Town店', type: 'shop', addr: 'https://naver.me/GgU5M9Pq' },
-                    { time: '17:00', title: '南浦洞-樂天', desc: '樂天百貨/超市', type: 'shop', addr: 'https://naver.me/5FDYu0YL' },
-                    { time: '19:00', title: '住宿', desc: '搭地鐵回西面', type: 'hotel', addr: 'https://naver.me/x2YsHkT6' }
+                    { time: '08:00', title: '早餐', desc: '西面-EGG DROP，交通(西面飯店 - 西面-EGG DROP)：\n走路21min', type: 'food', addr: 'https://naver.me/xUZTrpdf' },
+                    { time: '10:00', title: '西面大創', desc: '西面大創2號店，交通(西面-EGG DROP - 西面大創)：\n走路7min', type: 'shopping', addr: 'https://naver.me/GNJH43rD' },
+                    { time: '12:00', title: '烤章魚', desc: '西面-烤章魚(西面大創 - 西面-烤章魚)：\n走路5min', type: 'food', addr: 'https://naver.me/FKG1cMLb', extraLink: 'https://www.instagram.com/reel/DYCNyAhzkSw/' },
+                    { time: '14:00', title: '西面Olive Young', desc: 'Olive Young西面Town店，交通( 西面-烤章魚 - 西面Olive Young)：\n走路2min', type: 'shop', addr: 'https://naver.me/GgU5M9Pq' },
+                    { time: '17:00', title: '南浦洞-樂天百貨/超市 光復店', desc: '樂天百貨/超市逛街吃飯，交通( 西面Olive Young - 南浦洞-樂天百貨/超市 光復店)：\n走路+搭地鐵紅色1號線(西面-南浦)22min', type: 'shop', addr: 'https://naver.me/5FDYu0YL' },
+                    { time: '19:00', title: '住宿', desc: '回飯店休息，交通(南浦洞-樂天百貨/超市 光復店 - 西面飯店)：\n走路+搭地鐵紅色1號線(南浦-西面)30min', type: 'hotel', addr: 'https://naver.me/x2YsHkT6' }
                 ],
                 d9: [
                     { time: '09:00', title: '起飛 (KE 2085)', desc: '釜山 ➝ 桃園', type: 'flight', highlight: true },
@@ -302,31 +337,83 @@
                     { time: '12:00', title: '回家', desc: '旅程結束', type: 'car', highlight: true }
                 ]
             },
-            taxiFares: [
-                { date: '6/27 (D2)', time: '10:00', route: '廣安里飯店 - 膠囊列車尾浦站', duration: '25min', krw: '9,900', twd: '196.36', toll: '' },
-                { date: '6/27 (D2)', time: '19:00', route: '釜山 X the SKY - 廣安里-無人機', duration: '31min', krw: '9,600', twd: '190.41', toll: '' },
-                { date: '6/28 (D3)', time: '09:00', route: '廣安里飯店 - 松島海上纜車', duration: '35min', krw: '19,900', twd: '422.46', toll: '1,400' },
-                { date: '6/28 (D3)', time: '12:00', route: '松島海上纜車 - 1969刀削麵', duration: '14min', krw: '7,300', twd: '144.79', toll: '' },
-                { date: '6/28 (D3)', time: '15:30', route: '釜山塔 - Arte Museum', duration: '20min', krw: '8,200', twd: '162.64', toll: '' },
-                { date: '6/28 (D3)', time: '18:00', route: 'Arte Museum - 明星一隻雞', duration: '14min', krw: '7,300', twd: '144.79', toll: '' },
-                { date: '6/28 (D3)', time: '20:00', route: '明星一隻雞 - 廣安里飯店', duration: '41min', krw: '15,500', twd: '335.19', toll: '1,400' },
-                { date: '6/29 (D4)', time: '08:00', route: '廣安里飯店 - 海東龍宮寺', duration: '24min', krw: '14,800', twd: '313.38', toll: '1,000' },
-                { date: '6/29 (D4)', time: '20:30', route: '樂天outlet美食街 - 廣安里飯店', duration: '24min', krw: '13,600', twd: '285.87', toll: '1,000' },
-                { date: '6/30 (D5)', time: '11:00', route: '廣安里飯店 - 西面飯店', duration: '23min', krw: '10,300', twd: '204.29', toll: '' },
-                { date: '7/01 (D6)', time: '09:00', route: '西面飯店 - 白淺灘文化村', duration: '27min', krw: '12,400', twd: '245.94', toll: '' },
-                { date: '7/01 (D6)', time: '15:00', route: '白淺灘文化村 - 三進魚板總店', duration: '9min', krw: '5,000', twd: '99.17', toll: '' },
-                { date: '7/01 (D6)', time: '17:00', route: '三進魚板總店 - 西面-豬肉烤肉', duration: '21min', krw: '10,800', twd: '214.21', toll: '' },
-                { date: '7/02 (D7)', time: '09:00', route: '西面飯店 - 甘川洞文化村', duration: '31min', krw: '13,500', twd: '267.76', toll: '' },
-                { date: '7/02 (D7)', time: '12:00', route: '甘川洞文化村 - 南浦洞-辣炒雞', duration: '14min', krw: '6,600', twd: '130.90', toll: '' }
-            ],
             restaurants: [
-                { location: '廣安里', name: '廣安里海鮮鍋', date: '6/26 (Day 1)', time: '17:30', desc: '晚餐', addr: 'https://naver.me/GgWkHCBk', extraLink: 'https://reurl.cc/18da8Q' },
-                { location: '青沙浦', name: '青沙浦大麥拌飯(烤黃魚)', date: '6/27 (Day 2)', time: '13:00', desc: '中餐', addr: 'https://naver.me/FYrPoFi6', extraLink: 'https://vivawei.tw/og-ibolibab/' },
-                { location: '海雲台', name: '海雲台鱈魚湯', date: '6/27 (Day 2)', time: '17:30', desc: '晚餐', addr: 'https://naver.me/Gi0EVli7', extraLink: 'https://www.instagram.com/reel/DPlrXCGiRaw/' },
-                { location: '南浦洞', name: '明星一隻雞', date: '6/28 (Day 3)', time: '18:00', desc: '晚餐', addr: 'https://naver.me/FiPZcZsq' },
-                { location: '機張', name: '機張-血蛤定食', date: '6/29 (Day 4)', time: '12:00', desc: '中餐', addr: 'https://naver.me/xnOT99Fz' },
-                { location: '西面', name: '秀英本家豬肉湯飯', date: '6/30 (Day 5)', time: '12:30', desc: '中餐', addr: 'https://naver.me/F5swWRTD' },
-                { location: '西面', name: '西面-肥腸花Pil Muryeop', date: '6/30 (Day 5)', time: '17:30', desc: '晚餐', addr: 'https://naver.me/5QsrSiBG' }
+                {
+                    location: '廣安里',
+                    name: '廣安里海鮮鍋',
+                    date: '6/26 (Day 1)',
+                    time: '17:30',
+                    desc: '晚餐',
+                    addr: 'https://naver.me/GgWkHCBk',
+                    extraLink: 'https://reurl.cc/18da8Q'
+                },
+                {
+                    location: '青沙浦',
+                    name: '青沙浦大麥拌飯(烤黃魚)',
+                    date: '6/27 (Day 2)',
+                    time: '13:00',
+                    desc: '中餐',
+                    addr: 'https://naver.me/FYrPoFi6',
+                    extraLink: 'https://vivawei.tw/og-ibolibab/'
+                },
+                {
+                    location: '海雲台',
+                    name: '海雲台鱈魚湯',
+                    date: '6/27 (Day 2)',
+                    time: '17:30',
+                    desc: '晚餐',
+                    addr: 'https://naver.me/Gi0EVli7',
+                    extraLink: 'https://www.instagram.com/reel/DPlrXCGiRaw/'
+                },
+                {
+                    location: '南浦洞',
+                    name: '明星一隻雞',
+                    date: '6/28 (Day 3)',
+                    time: '18:00',
+                    desc: '晚餐',
+                    addr: 'https://naver.me/FiPZcZsq'
+                },
+                {
+                    location: '機張',
+                    name: '機張-血蛤定食',
+                    date: '6/29 (Day 4)',
+                    time: '12:00',
+                    desc: '中餐',
+                    addr: 'https://naver.me/xnOT99Fz'
+                },
+                {
+                    location: '西面',
+                    name: '秀英本家豬肉湯飯',
+                    date: '6/30 (Day 5)',
+                    time: '12:30',
+                    desc: '中餐',
+                    addr: 'https://naver.me/F5swWRTD'
+                },
+                {
+                    location: '西面',
+                    name: '西面-肥腸花Pil Muryeop',
+                    date: '6/30 (Day 5)',
+                    time: '17:30',
+                    desc: '晚餐',
+                    addr: 'https://naver.me/5QsrSiBG'
+                }
+            ],
+            taxiFares: [
+                { date: '6/27 (D2)', time: '10:00', route: '廣安里飯店 - 膠囊列車尾浦站', duration: '25min', krw: '9,900', twd: '196.36', krwToll: '', twdToll: '' },
+                { date: '6/27 (D2)', time: '19:00', route: '釜山 X the SKY - 廣安里-無人機', duration: '31min', krw: '9,600', twd: '190.41', krwToll: '', twdToll: '' },
+                { date: '6/28 (D3)', time: '09:00', route: '廣安里飯店 - 松島海上纜車', duration: '35min', krw: '19,900', twd: '422.46', krwToll: '+Toll 1,400', twdToll: '' },
+                { date: '6/28 (D3)', time: '12:00', route: '松島海上纜車 - 1969刀削麵', duration: '14min', krw: '7,300', twd: '144.79', krwToll: '', twdToll: '' },
+                { date: '6/28 (D3)', time: '15:30', route: '釜山塔 - Arte Museum', duration: '20min', krw: '8,200', twd: '162.64', krwToll: '', twdToll: '' },
+                { date: '6/28 (D3)', time: '18:00', route: 'Arte Museum - 明星一隻雞', duration: '14min', krw: '7,300', twd: '144.79', krwToll: '', twdToll: '' },
+                { date: '6/28 (D3)', time: '20:00', route: '明星一隻雞 - 廣安里飯店', duration: '41min', krw: '15,500', twd: '335.19', krwToll: '+Toll 1,400', twdToll: '' },
+                { date: '6/29 (D4)', time: '08:00', route: '廣安里飯店 - 海東龍宮寺', duration: '24min', krw: '14,800', twd: '313.38', krwToll: '+Toll 1,000', twdToll: '' },
+                { date: '6/29 (D4)', time: '20:30', route: '樂天outlet美食街 - 廣安里飯店', duration: '24min', krw: '13,600', twd: '285.87', krwToll: '+Toll 1,000', twdToll: '' },
+                { date: '6/30 (D5)', time: '11:00', route: '廣安里飯店 - 西面飯店', duration: '23min', krw: '10,300', twd: '204.29', krwToll: '', twdToll: '' },
+                { date: '7/01 (D6)', time: '09:00', route: '西面飯店 - 白淺灘文化村', duration: '27min', krw: '12,400', twd: '245.94', krwToll: '', twdToll: '' },
+                { date: '7/01 (D6)', time: '15:00', route: '白淺灘文化村 - 三進魚板總店', duration: '9min', krw: '5,000', twd: '99.17', krwToll: '', twdToll: '' },
+                { date: '7/01 (D6)', time: '17:00', route: '三進魚板總店 - 西面-豬肉烤肉', duration: '21min', krw: '10,800', twd: '214.21', krwToll: '', twdToll: '' },
+                { date: '7/02 (D7)', time: '09:00', route: '西面飯店 - 甘川洞文化村', duration: '31min', krw: '13,500', twd: '267.76', krwToll: '', twdToll: '' },
+                { date: '7/02 (D7)', time: '12:00', route: '甘川洞文化村 - 南浦洞-辣炒雞', duration: '14min', krw: '6,600', twd: '130.90', krwToll: '', twdToll: '' }
             ],
             checklist: {
                 luggage: {
@@ -359,7 +446,8 @@
             food: 'fa-utensils',
             hotel: 'fa-bed',
             play: 'fa-ticket',
-            shop: 'fa-bag-shopping'
+            shop: 'fa-bag-shopping',
+            shopping: 'fa-bag-shopping'
         };
 
         function init() {
@@ -384,9 +472,10 @@
             }
         }
 
+        // ================= 行程 =================
         function renderPlan(container) {
             let flightHTML = `<div class="p-4 space-y-3">
-                <div class="bg-white p-4 rounded-3xl shadow-soft">
+                <div class="bg-white p-4 rounded-2xl shadow-soft">
                     <h3 class="text-xs font-bold text-gray-400 mb-2 uppercase tracking-wider">Flight Info</h3>
                     ${tripData.flights.map(f => `
                         <div class="flex justify-between items-center py-1 border-b border-gray-100 last:border-0">
@@ -428,9 +517,7 @@
             });
 
             const timelineContainer = document.getElementById('timeline-list');
-            if (timelineContainer) {
-                timelineContainer.innerHTML = renderDayItems(day);
-            }
+            if(timelineContainer) timelineContainer.innerHTML = renderDayItems(day);
             checkSelection();
         }
 
@@ -439,6 +526,8 @@
                 const iconClass = icons[item.type] || 'fa-location-dot';
                 const highlightClass = item.highlight ? 'text-ocean-blue' : 'text-gray-400';
                 const uniqueId = `${day}-${index}`;
+                
+                // 跳脫單引號以免 onclick 報錯
                 const safeAddr = item.addr ? item.addr.replace(/'/g, "\\'") : '';
                 
                 let mapBtnHTML = '';
@@ -471,13 +560,13 @@
                     </div>
                     
                     <div class="flex-1 pb-4">
-                        <div id="card-${uniqueId}" class="trip-card bg-white p-4 rounded-3xl shadow-soft relative" onclick="toggleSelection('${uniqueId}')" onmousedown="elScale(this, true)" onmouseup="elScale(this, false)" onmouseleave="elScale(this, false)" ontouchstart="elScale(this, true)" ontouchend="elScale(this, false)">
+                        <div id="card-${uniqueId}" class="trip-card bg-white p-4 rounded-2xl shadow-soft relative" onclick="toggleSelection('${uniqueId}')">
                             <div class="flex justify-between items-start">
                                 <div class="pr-6">
                                     <h4 class="font-bold text-base text-muji-text ${item.highlight ? 'text-ocean-blue' : ''}">${item.title}</h4>
                                     <p class="text-xs text-gray-500 mt-2 leading-relaxed whitespace-pre-wrap">${item.desc}</p>
                                 </div>
-                                <i class="fa-solid ${iconClass} ${highlightClass} opacity-20 text-2xl absolute top-4 right-4"></i>
+                                <i class="fa-solid ${iconClass} ${highlightClass} opacity-20 text-2xl absolute top-3 right-3"></i>
                             </div>
                             <div class="paw-stamp">🐾</div>
                             ${mapBtnHTML}
@@ -488,12 +577,108 @@
             }).join('');
         }
 
+        // ================= 計程車 =================
+        function renderTaxi(container) {
+            let html = `
+            <div class="p-4 animate-fade-in">
+                <div class="bg-white rounded-2xl shadow-soft p-4 overflow-x-auto">
+                    <h2 class="text-base font-bold text-muji-text mb-4 flex items-center gap-2 border-l-4 border-ocean-blue pl-2">
+                        計程車費用統計
+                    </h2>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>日期</th>
+                                <th class="route-cell">路線</th>
+                                <th>費用 (₩)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+
+            let currentDate = '';
+            let dateTotal = { krw: 0, twd: 0, toll: 0 };
+            let grandTotalKrw = 0;
+            let grandTotalTolls = 0;
+
+            tripData.taxiFares.forEach((fare, index) => {
+                let krwAmount = parseInt(fare.krw.replace(/,/g, ''));
+                let tollAmount = fare.krwToll ? parseInt(fare.krwToll.replace(/[^0-9]/g, '')) : 0;
+
+                if (fare.date !== currentDate && currentDate !== '') {
+                    html += `
+                        <tr class="subtotal-row">
+                            <td colspan="2" class="text-right pr-2">小計</td>
+                            <td class="text-ocean-blue font-bold">${dateTotal.krw.toLocaleString()}</td>
+                        </tr>
+                    `;
+                    dateTotal = { krw: 0, twd: 0, toll: 0 };
+                }
+
+                currentDate = fare.date;
+                dateTotal.krw += (krwAmount + tollAmount);
+                grandTotalKrw += krwAmount;
+                grandTotalTolls += tollAmount;
+
+                html += `
+                    <tr>
+                        <td class="text-xs">${fare.date.split(' ')[0]}</td>
+                        <td class="route-cell text-xs">${fare.route}</td>
+                        <td class="text-xs font-mono">
+                            ${fare.krw}
+                            ${fare.krwToll ? `<br><span class="text-[10px] text-cat-orange">${fare.krwToll}</span>` : ''}
+                        </td>
+                    </tr>
+                `;
+            });
+
+            if (currentDate !== '') {
+                html += `
+                    <tr class="subtotal-row">
+                        <td colspan="2" class="text-right pr-2">小計</td>
+                        <td class="text-ocean-blue font-bold">${dateTotal.krw.toLocaleString()}</td>
+                    </tr>
+                `;
+            }
+
+            let finalKrw = grandTotalKrw + grandTotalTolls;
+            let finalTwd = Math.round(finalKrw * walletRate);
+
+            html += `
+                        </tbody>
+                    </table>
+
+                    <div class="mt-6 p-4 bg-ocean-light rounded-xl border border-blue-200">
+                        <h3 class="font-bold text-ocean-blue mb-3 text-sm">💰 全程費用統計 (共 ${tripData.taxiFares.length} 趟)</h3>
+                        <div class="space-y-2 text-xs text-muji-text">
+                            <p class="flex justify-between"><span>車資總額：</span><span class="font-mono">${grandTotalKrw.toLocaleString()} ₩</span></p>
+                            <p class="flex justify-between"><span>過路費：</span><span class="font-mono">${grandTotalTolls.toLocaleString()} ₩</span></p>
+                            <div class="h-px bg-blue-200 my-1"></div>
+                            <p class="flex justify-between font-bold text-sm text-ocean-blue"><span>韓幣總計：</span><span class="font-mono">${finalKrw.toLocaleString()} ₩</span></p>
+                            <p class="flex justify-between text-gray-500 mt-1"><span>約合台幣：</span><span class="font-mono">NT$ ${finalTwd.toLocaleString()}</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        // ================= 指南 =================
         function renderGuide(container) {
             const locationOrder = ['廣安里', '海雲台', '青沙浦', '機張', '西面', '南浦洞'];
+            const restaurantsByLocation = {};
+            
+            locationOrder.forEach(location => {
+                restaurantsByLocation[location] = tripData.restaurants.filter(r => r.location === location);
+            });
+
             let guideHTML = `<div class="p-4 space-y-6 pb-8">`;
             
             locationOrder.forEach(location => {
-                const restaurants = tripData.restaurants.filter(r => r.location === location);
+                const restaurants = restaurantsByLocation[location];
                 if (restaurants.length > 0) {
                     guideHTML += `
                     <div class="animate-fade-in">
@@ -504,14 +689,14 @@
                         <div class="space-y-4">
                     `;
                     
-                    restaurants.forEach(restaurant => {
+                    restaurants.forEach((restaurant) => {
                         const safeAddr = restaurant.addr ? restaurant.addr.replace(/'/g, "\\'") : '';
                         guideHTML += `
-                        <div class="bg-white rounded-3xl shadow-soft overflow-hidden">
+                        <div class="bg-white rounded-2xl shadow-soft overflow-hidden">
                             <div class="p-4">
                                 <div class="flex items-start justify-between mb-2">
                                     <h3 class="font-bold text-base text-muji-text flex-1">${restaurant.name}</h3>
-                                    <span class="text-[10px] bg-blue-100 text-ocean-blue px-2 py-1 rounded font-bold whitespace-nowrap ml-2">${restaurant.date.split(' ')[0]}</span>
+                                    <span class="text-[10px] bg-blue-100 text-ocean-blue px-2 py-1 rounded font-bold ml-2">${restaurant.date.split(' ')[0]}</span>
                                 </div>
                                 <div class="flex gap-3 text-xs text-gray-500 mb-3">
                                     <span><i class="fa-solid fa-clock mr-1"></i>${restaurant.time}</span>
@@ -527,104 +712,36 @@
                                 
                                 <div class="flex gap-2">
                         `;
-                        if (restaurant.addr) guideHTML += `<a href="${restaurant.addr}" target="_blank" class="flex-1 inline-flex justify-center items-center text-xs bg-blue-50 text-ocean-blue rounded-lg py-2 font-bold hover:bg-blue-100 transition-colors"><i class="fa-solid fa-link mr-1"></i> Naver Map</a>`;
-                        if (restaurant.extraLink) guideHTML += `<a href="${restaurant.extraLink}" target="_blank" class="flex-1 inline-flex justify-center items-center text-xs bg-orange-50 text-cat-orange rounded-lg py-2 font-bold hover:bg-orange-100 transition-colors"><i class="fa-solid fa-external-link mr-1"></i> 網誌</a>`;
-                        if (restaurant.addr) guideHTML += `<button onclick="copyAddr('${safeAddr}');" class="inline-flex justify-center items-center w-10 text-xs bg-gray-50 text-gray-400 rounded-lg hover:text-ocean-blue hover:bg-blue-100 transition-colors"><i class="fa-solid fa-copy"></i></button>`;
                         
-                        guideHTML += `</div></div></div>`;
+                        if (restaurant.addr) {
+                            guideHTML += `<a href="${restaurant.addr}" target="_blank" class="flex-1 inline-flex justify-center items-center text-xs bg-blue-50 text-ocean-blue rounded-lg py-2 font-bold hover:bg-blue-100 transition-colors"><i class="fa-solid fa-link mr-1"></i> 開啟地圖</a>`;
+                        }
+                        if (restaurant.extraLink) {
+                            guideHTML += `<a href="${restaurant.extraLink}" target="_blank" class="flex-1 inline-flex justify-center items-center text-xs bg-orange-50 text-cat-orange rounded-lg py-2 font-bold hover:bg-orange-100 transition-colors"><i class="fa-solid fa-external-link mr-1"></i> 網誌</a>`;
+                        }
+                        if (restaurant.addr) {
+                            guideHTML += `<button onclick="copyAddr('${safeAddr}'); event.stopPropagation();" class="inline-flex justify-center items-center w-10 text-xs bg-gray-50 text-gray-400 rounded-lg hover:text-ocean-blue hover:bg-blue-100 transition-colors"><i class="fa-solid fa-copy"></i></button>`;
+                        }
+                        
+                        guideHTML += `
+                                </div>
+                            </div>
+                        </div>
+                        `;
                     });
-                    guideHTML += `</div></div>`;
+                    
+                    guideHTML += `
+                        </div>
+                    </div>
+                    `;
                 }
             });
+            
             guideHTML += `</div>`;
             container.innerHTML = guideHTML;
         }
 
-        function renderTaxi(container) {
-            let html = `
-            <div class="p-4 animate-fade-in">
-                <div class="bg-white rounded-3xl shadow-soft p-5 overflow-hidden">
-                    <h2 class="text-base font-bold text-muji-text mb-4 flex items-center gap-2 border-l-4 border-ocean-blue pl-3">
-                        計程車預估費用
-                    </h2>
-                    
-                    <div class="overflow-x-auto rounded-xl border border-gray-100">
-                        <table class="min-w-full">
-                            <thead>
-                                <tr>
-                                    <th class="whitespace-nowrap">日期</th>
-                                    <th class="route-cell min-w-[120px]">路線</th>
-                                    <th class="whitespace-nowrap">韓幣 (₩)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-            `;
-
-            let currentDate = '';
-            let dateTotal = 0;
-            let grandTotalKrw = 0;
-            let totalTolls = 0;
-
-            tripData.taxiFares.forEach((fare) => {
-                let krwAmount = parseInt(fare.krw.replace(/,/g, ''));
-                let tollAmount = fare.toll ? parseInt(fare.toll.replace(/,/g, '')) : 0;
-                
-                if (fare.date !== currentDate && currentDate !== '') {
-                    html += `<tr class="subtotal-row"><td colspan="2" class="text-right pr-2 text-ocean-blue">小計</td><td class="text-ocean-blue font-bold">${dateTotal.toLocaleString()}</td></tr>`;
-                    dateTotal = 0;
-                }
-
-                currentDate = fare.date;
-                dateTotal += (krwAmount + tollAmount);
-                grandTotalKrw += krwAmount;
-                totalTolls += tollAmount;
-
-                html += `
-                    <tr>
-                        <td class="text-xs text-gray-500">${fare.date.split(' ')[0]}</td>
-                        <td class="route-cell text-xs">${fare.route}</td>
-                        <td class="text-xs font-mono">
-                            ${fare.krw}
-                            ${fare.toll ? `<br><span class="text-[10px] text-cat-orange">+Toll ${fare.toll}</span>` : ''}
-                        </td>
-                    </tr>
-                `;
-            });
-
-            if (currentDate !== '') {
-                html += `<tr class="subtotal-row"><td colspan="2" class="text-right pr-2 text-ocean-blue">小計</td><td class="text-ocean-blue font-bold">${dateTotal.toLocaleString()}</td></tr>`;
-            }
-
-            let finalKrw = grandTotalKrw + totalTolls;
-            let finalTwd = Math.round(finalKrw * walletRate);
-
-            html += `
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="mt-6 p-4 bg-ocean-light rounded-2xl border border-blue-100">
-                        <h3 class="font-bold text-ocean-blue mb-3 text-sm"><i class="fa-solid fa-receipt mr-2"></i>全程費用統計 (共 ${tripData.taxiFares.length} 趟)</h3>
-                        <div class="space-y-2 text-xs text-muji-text">
-                            <div class="flex justify-between"><span>車資總計：</span><span class="font-mono">${grandTotalKrw.toLocaleString()} ₩</span></div>
-                            <div class="flex justify-between"><span>過路費總計：</span><span class="font-mono">${totalTolls.toLocaleString()} ₩</span></div>
-                            <div class="h-px bg-blue-200 my-1"></div>
-                            <div class="flex justify-between font-bold text-sm">
-                                <span>單車總額：</span>
-                                <span class="text-ocean-blue font-mono">${finalKrw.toLocaleString()} ₩</span>
-                            </div>
-                            <div class="flex justify-between text-gray-500 mt-1">
-                                <span>約合台幣：</span>
-                                <span class="font-mono">NT$ ${finalTwd.toLocaleString()}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            `;
-            container.innerHTML = html;
-        }
-
+        // ================= 記帳 =================
         function renderWallet(container) {
             const totalKrw = expenses.reduce((sum, item) => sum + item.amount, 0);
             const totalTwd = Math.round(totalKrw * walletRate);
@@ -634,7 +751,7 @@
                 <div class="bg-ocean-blue text-white p-6 rounded-3xl shadow-floating relative overflow-hidden">
                     <div class="absolute -top-6 -right-6 text-8xl opacity-10">🐱</div>
                     <div class="mb-4 flex items-center justify-between">
-                        <label class="text-xs opacity-80">自訂匯率 (1 KRW = ? TWD)</label>
+                        <label class="text-xs opacity-80 block">自訂匯率 (1 KRW = ? TWD)</label>
                         <input type="number" step="0.001" value="${walletRate}" onchange="updateRate(this.value)" class="bg-white/20 text-white w-20 text-center rounded py-1 outline-none font-mono text-sm border border-white/30">
                     </div>
                     <div class="bg-white/10 rounded-2xl p-4 backdrop-blur-sm border border-white/10">
@@ -647,8 +764,8 @@
                     </div>
                 </div>
 
-                <div class="bg-white p-5 rounded-3xl shadow-soft">
-                    <h3 class="font-bold text-muji-text mb-3 border-l-4 border-ocean-blue pl-3">新增消費</h3>
+                <div class="bg-white p-5 rounded-2xl shadow-soft">
+                    <h3 class="font-bold text-muji-text mb-3 border-l-4 border-ocean-blue pl-2">新增消費</h3>
                     <div class="space-y-3">
                         <input type="text" id="exp-name" placeholder="品項名稱 (例：買水)" class="muji-input">
                         <input type="number" id="exp-amount" placeholder="金額 (韓幣)" class="muji-input">
@@ -656,7 +773,7 @@
                     </div>
                 </div>
 
-                <div class="pb-4">
+                <div class="pb-safe">
                     <div class="flex justify-between items-end mb-3 px-1">
                         <h3 class="font-bold text-muji-text">消費紀錄</h3>
                         <span class="text-[10px] text-gray-500 font-mono bg-gray-100 px-2 py-1 rounded-full">總計 ₩${totalKrw.toLocaleString()}</span>
@@ -669,7 +786,7 @@
                                     <div class="font-bold text-sm text-muji-text">${item.name}</div>
                                     <div class="text-[10px] text-gray-400 mt-0.5">${item.date}</div>
                                 </div>
-                                <div class="text-right mr-4">
+                                <div class="text-right mr-3">
                                     <div class="font-mono font-bold text-ocean-blue">₩${item.amount.toLocaleString()}</div>
                                     <div class="text-[10px] text-gray-400 font-mono">NT$${Math.round(item.amount * walletRate).toLocaleString()}</div>
                                 </div>
@@ -711,7 +828,7 @@
         function addExpense() {
             const name = document.getElementById('exp-name').value.trim();
             const amount = parseFloat(document.getElementById('exp-amount').value);
-            if(!name || isNaN(amount)) { alert('請輸入完整的名稱與金額！'); return; }
+            if(!name || isNaN(amount)) { alert('請輸入完整的名稱與金額'); return; }
             
             const newExp = {
                 name, amount,
@@ -730,6 +847,7 @@
             }
         }
 
+        // ================= 清單 =================
         function renderLists(container) {
             let displayLuggageItems = tripData.checklist.luggage.items.split('、').map(s => s.trim()).filter(s => s);
             if (customChecklistItems.length > 0) {
@@ -746,7 +864,7 @@
                     ${Object.keys(renderData).map(key => {
                         const list = renderData[key];
                         return `
-                        <div class="bg-white rounded-3xl p-5 shadow-soft cursor-pointer hover:shadow-lg transition-all active:scale-95 flex flex-col items-center justify-center gap-3 h-32 border border-gray-50" onclick="toggleList('${key}')">
+                        <div class="bg-white rounded-2xl p-5 shadow-soft cursor-pointer hover:shadow-lg transition-all active:scale-95 flex flex-col items-center justify-center gap-3 h-32 border border-gray-50" onclick="toggleList('${key}')">
                             <i class="fa-solid ${list.icon} text-4xl ${list.color}"></i>
                             <h3 class="font-bold text-muji-text text-sm">${list.title}</h3>
                         </div>
@@ -757,10 +875,10 @@
                 ${Object.keys(renderData).map(key => {
                     const list = renderData[key];
                     return `
-                    <div id="list-content-${key}" class="hidden bg-white rounded-3xl p-5 shadow-soft animate-fade-in border border-gray-50">
-                        <div class="flex justify-between items-center mb-4 border-l-4 border-ocean-blue pl-3">
+                    <div id="list-content-${key}" class="hidden bg-white rounded-2xl p-5 shadow-soft animate-fade-in border border-gray-50">
+                        <div class="flex justify-between items-center mb-4 border-l-4 border-ocean-blue pl-2">
                             <h3 class="font-bold text-muji-text">${list.title}</h3>
-                            <button onclick="toggleList('${key}')" class="text-gray-400 p-1 hover:text-gray-700"><i class="fa-solid fa-xmark"></i></button>
+                            <button onclick="toggleList('${key}')" class="text-gray-400 p-1"><i class="fa-solid fa-xmark"></i></button>
                         </div>
                         <div class="grid grid-cols-2 gap-x-3 gap-y-3">
                             ${list.items.filter(item => !deletedListItems[item]).map(item => `
@@ -781,8 +899,8 @@
                     `;
                 }).join('')}
 
-                <div class="bg-white rounded-3xl p-5 shadow-soft border border-gray-50">
-                    <h3 class="font-bold text-muji-text mb-3 border-l-4 border-ocean-blue pl-3">新增備忘錄 / 物品</h3>
+                <div class="bg-white rounded-2xl p-5 shadow-soft border border-gray-50">
+                    <h3 class="font-bold text-muji-text mb-3 border-l-4 border-ocean-blue pl-2">新增備忘錄 / 物品</h3>
                     <textarea id="memo-input" class="w-full bg-muji-bg rounded-xl p-3 text-sm leading-relaxed outline-none resize-none border border-transparent focus:border-ocean-blue h-20" placeholder="輸入要帶的物品 (可使用逗號分隔多項)"></textarea>
                     <button onclick="saveMemoAsItem()" class="w-full mt-3 bg-ocean-blue text-white py-2.5 rounded-xl text-sm font-bold shadow-md active:scale-95 transition-transform">加入行李清單</button>
                 </div>
@@ -833,6 +951,7 @@
             toggleList('luggage');
         }
 
+        // ================= 共用功能 =================
         function copyAddr(text) {
             if (!text) return;
             navigator.clipboard.writeText(text).then(() => {
@@ -857,11 +976,6 @@
             if(savedId && savedId.startsWith(currentDay)) {
                 toggleSelection(savedId);
             }
-        }
-
-        function elScale(el, isDown) {
-            if (isDown) el.style.transform = 'scale(0.98)';
-            else el.style.transform = '';
         }
 
         function openModal(src) {
