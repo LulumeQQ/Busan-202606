@@ -281,7 +281,7 @@
                     { time: '09:00', title: '白淺灘文化村', desc: '交通(西面飯店 - 白淺灘文化村)：\n計程車27min (費用約12400韓元/245.94台幣)', type: 'play', addr: 'https://naver.me/GWW6PBsv' },
                     { time: '12:00', title: '中餐', desc: 'Burger yo海鮮漢堡，交通(白淺灘文化村 - 海鮮漢堡)：\n走路6min', type: 'food', addr: 'https://naver.me/FbVtW0JH', extraLink: 'https://reurl.cc/53YKVn' },
                     { time: '15:00', title: '三進魚板總店', desc: '交通(白淺灘文化村 - 三進魚板總店)：\n計程車9min (費用約5000韓元/99.17台幣)\n走路29min', type: 'play', addr: 'https://naver.me/539EkzeT', extraLink: 'https://www.instagram.com/reel/DWEP00qprUt/' },
-                    { time: '17:00', title: '晚餐', desc: '西面-豬肉烤肉，交通(三進魚板總店 - 西面-豬肉烤肉)：\n計程車21min (費用約10800韓元/214.21台幣)', type: 'food', addr: 'https://naver.me/xLNcDiZe', extraLink: 'https://www.facebook.com/watch/?v=2374278089738626' },
+                    { time: '17:00', title: '晚餐', desc: '西面-豬肉烤肉', desc: '交通(三進魚板總店 - 西面-豬肉烤肉)：\n計程車21min (費用約10800韓元/214.21台幣)', type: 'food', addr: 'https://naver.me/xLNcDiZe', extraLink: 'https://www.facebook.com/watch/?v=2374278089738626' },
                     { time: '19:00', title: '住宿', desc: '回飯店休息，交通(西面-豬肉烤肉 - 西面飯店)：\n走路5min', type: 'hotel', addr: 'https://naver.me/x2YsHkT6' }
                 ],
                 d7: [
@@ -368,21 +368,21 @@
                 }
             ],
             taxiFares: [
-                { date: '6/27 (D2)', time: '10:00', route: '廣安里飯店 - 膠囊列車尾浦站', krw: 9900, twd: 196.36 },
-                { date: '6/27 (D2)', time: '19:00', route: '釜山 X the SKY - 廣安里-無人機', krw: 9600, twd: 190.41 },
-                { date: '6/28 (D3)', time: '09:00', route: '廣安里飯店 - 松島海上纜車', krw: 21300, twd: 422.46 }, // 19900 + 1400
-                { date: '6/28 (D3)', time: '12:00', route: '松島海上纜車 - 1969刀削麵', krw: 7300, twd: 144.79 },
-                { date: '6/28 (D3)', time: '15:30', route: '釜山塔 - Arte Museum', krw: 8200, twd: 162.64 },
-                { date: '6/28 (D3)', time: '18:00', route: 'Arte Museum - 明星一隻雞', krw: 7300, twd: 144.79 },
-                { date: '6/28 (D3)', time: '20:00', route: '明星一隻雞 - 廣安里飯店', krw: 16900, twd: 335.19 }, // 15500 + 1400
-                { date: '6/29 (D4)', time: '08:00', route: '廣安里飯店 - 海東龍宮寺', krw: 15800, twd: 313.38 }, // 14800 + 1000
-                { date: '6/29 (D4)', time: '20:30', route: '樂天outlet美食街 - 廣安里飯店', krw: 14600, twd: 285.87 }, // 13600 + 1000
-                { date: '6/30 (D5)', time: '11:00', route: '廣安里飯店 - 西面飯店', krw: 10300, twd: 204.29 },
-                { date: '7/01 (D6)', time: '09:00', route: '西面飯店 - 白淺灘文化村', krw: 12400, twd: 245.94 },
-                { date: '7/01 (D6)', time: '15:00', route: '白淺灘文化村 - 三進魚板總店', krw: 5000, twd: 99.17 },
-                { date: '7/01 (D6)', time: '17:00', route: '三進魚板總店 - 西面-豬肉烤肉', krw: 10800, twd: 214.21 },
-                { date: '7/02 (D7)', time: '09:00', route: '西面飯店 - 甘川洞文化村', krw: 13500, twd: 267.76 },
-                { date: '7/02 (D7)', time: '12:00', route: '甘川洞文化村 - 南浦洞-辣炒雞', krw: 6600, twd: 130.90 }
+                { date: '6/27 (D2)', time: '10:00', route: '廣安里飯店 - 膠囊列車尾浦站', duration: '25min', krw: '9,900', twd: '196.36', krwToll: '', twdToll: '' },
+                { date: '6/27 (D2)', time: '19:00', route: '釜山 X the SKY - 廣安里-無人機', duration: '31min', krw: '9,600', twd: '190.41', krwToll: '', twdToll: '' },
+                { date: '6/28 (D3)', time: '09:00', route: '廣安里飯店 - 松島海上纜車', duration: '35min', krw: '19,900', twd: '422.46', krwToll: '+Toll 1,400', twdToll: '' },
+                { date: '6/28 (D3)', time: '12:00', route: '松島海上纜車 - 1969刀削麵', duration: '14min', krw: '7,300', twd: '144.79', krwToll: '', twdToll: '' },
+                { date: '6/28 (D3)', time: '15:30', route: '釜山塔 - Arte Museum', duration: '20min', krw: '8,200', twd: '162.64', krwToll: '', twdToll: '' },
+                { date: '6/28 (D3)', time: '18:00', route: 'Arte Museum - 明星一隻雞', duration: '14min', krw: '7,300', twd: '144.79', krwToll: '', twdToll: '' },
+                { date: '6/28 (D3)', time: '20:00', route: '明星一隻雞 - 廣安里飯店', duration: '41min', krw: '15,500', twd: '335.19', krwToll: '+Toll 1,400', twdToll: '' },
+                { date: '6/29 (D4)', time: '08:00', route: '廣安里飯店 - 海東龍宮寺', duration: '24min', krw: '14,800', twd: '313.38', krwToll: '+Toll 1,000', twdToll: '' },
+                { date: '6/29 (D4)', time: '20:30', route: '樂天outlet美食街 - 廣安里飯店', duration: '24min', krw: '13,600', twd: '285.87', krwToll: '+Toll 1,000', twdToll: '' },
+                { date: '6/30 (D5)', time: '11:00', route: '廣安里飯店 - 西面飯店', duration: '23min', krw: '10,300', twd: '204.29', krwToll: '', twdToll: '' },
+                { date: '7/01 (D6)', time: '09:00', route: '西面飯店 - 白淺灘文化村', duration: '27min', krw: '12,400', twd: '245.94', krwToll: '', twdToll: '' },
+                { date: '7/01 (D6)', time: '15:00', route: '白淺灘文化村 - 三進魚板總店', duration: '9min', krw: '5,000', twd: '99.17', krwToll: '', twdToll: '' },
+                { date: '7/01 (D6)', time: '17:00', route: '三進魚板總店 - 西面-豬肉烤肉', duration: '21min', krw: '10,800', twd: '214.21', krwToll: '', twdToll: '' },
+                { date: '7/02 (D7)', time: '09:00', route: '西面飯店 - 甘川洞文化村', duration: '31min', krw: '13,500', twd: '267.76', krwToll: '', twdToll: '' },
+                { date: '7/02 (D7)', time: '12:00', route: '甘川洞文化村 - 南浦洞-辣炒雞', duration: '14min', krw: '6,600', twd: '130.90', krwToll: '', twdToll: '' }
             ],
             checklist: {
                 luggage: {
@@ -560,70 +560,56 @@
                             <tr>
                                 <th>日期</th>
                                 <th class="route-cell">路線</th>
-                                <th>1台 (₩)</th>
-                                <th>1台 (NT$)</th>
+                                <th>1台車<br><span class="text-[10px]">(₩ / NT$)</span></th>
+                                <th>2台車<br><span class="text-[10px]">(₩ / NT$)</span></th>
                             </tr>
                         </thead>
                         <tbody>
             `;
 
-            let currentDate = '';
-            let dateTotalKrw = 0;
-            let dateTotalTwd = 0;
-            let grandTotalKrw = 0;
-            let grandTotalTwd = 0;
+            let grandKrw1 = 0;
+            let grandTwd1 = 0;
 
             tripData.taxiFares.forEach((fare) => {
-                let krwAmount = fare.krw;
-                let twdAmount = fare.twd;
+                // 解析原始金額字串，將韓幣與過路費加總
+                let krwBase = parseInt(fare.krw.replace(/,/g, '')) || 0;
+                let toll = fare.krwToll ? parseInt(fare.krwToll.replace(/[^0-9]/g, '')) : 0;
+                let totalKrw1 = krwBase + toll;
+                let totalKrw2 = totalKrw1 * 2;
+                
+                // 解析台幣
+                let twdBase = parseFloat(fare.twd) || 0;
+                let twdTotal1 = twdBase;
+                let twdTotal2 = twdBase * 2;
 
-                if (fare.date !== currentDate && currentDate !== '') {
-                    html += `
-                        <tr class="subtotal-row">
-                            <td colspan="2" class="text-right pr-2">小計</td>
-                            <td class="text-ocean-blue font-bold">${dateTotalKrw.toLocaleString()}</td>
-                            <td class="text-ocean-blue font-bold">${dateTotalTwd.toFixed(2)}</td>
-                        </tr>
-                    `;
-                    dateTotalKrw = 0;
-                    dateTotalTwd = 0;
-                }
-
-                currentDate = fare.date;
-                dateTotalKrw += krwAmount;
-                dateTotalTwd += twdAmount;
-                grandTotalKrw += krwAmount;
-                grandTotalTwd += twdAmount;
+                grandKrw1 += totalKrw1;
+                grandTwd1 += twdTotal1;
 
                 html += `
                     <tr>
-                        <td class="text-xs">${fare.date.split(' ')[0]}</td>
+                        <td class="text-xs whitespace-nowrap">${fare.date.split(' ')[0]}</td>
                         <td class="route-cell text-xs">${fare.route}</td>
-                        <td class="text-xs font-mono">${krwAmount.toLocaleString()}</td>
-                        <td class="text-xs font-mono">${twdAmount.toFixed(2)}</td>
+                        <td class="text-xs font-mono">
+                            ${totalKrw1.toLocaleString()} ₩<br>
+                            <span class="text-[10px] text-gray-500">NT$ ${twdTotal1.toFixed(2)}</span>
+                        </td>
+                        <td class="text-xs font-mono text-ocean-blue font-bold">
+                            ${totalKrw2.toLocaleString()} ₩<br>
+                            <span class="text-[10px] text-gray-400">NT$ ${twdTotal2.toFixed(2)}</span>
+                        </td>
                     </tr>
                 `;
             });
-
-            if (currentDate !== '') {
-                html += `
-                    <tr class="subtotal-row">
-                        <td colspan="2" class="text-right pr-2">小計</td>
-                        <td class="text-ocean-blue font-bold">${dateTotalKrw.toLocaleString()}</td>
-                        <td class="text-ocean-blue font-bold">${dateTotalTwd.toFixed(2)}</td>
-                    </tr>
-                `;
-            }
 
             html += `
                         </tbody>
                     </table>
 
                     <div class="mt-6 p-4 bg-ocean-light rounded-xl border border-blue-200">
-                        <h3 class="font-bold text-ocean-blue mb-3 text-sm">💰 全程費用統計 (共 ${tripData.taxiFares.length} 趟)</h3>
+                        <h3 class="font-bold text-ocean-blue mb-3 text-sm">💰 全程費用總計 (共 ${tripData.taxiFares.length} 趟)</h3>
                         <div class="space-y-2 text-xs text-muji-text">
-                            <p class="flex justify-between font-bold"><span>1台車總計：</span><span class="font-mono">${grandTotalKrw.toLocaleString()} ₩ / NT$ ${grandTotalTwd.toFixed(2)}</span></p>
-                            <p class="flex justify-between font-bold text-ocean-blue"><span>2台車總計：</span><span class="font-mono">${(grandTotalKrw * 2).toLocaleString()} ₩ / NT$ ${(grandTotalTwd * 2).toFixed(2)}</span></p>
+                            <p class="flex justify-between font-bold"><span>1台車總計：</span><span class="font-mono">${grandKrw1.toLocaleString()} ₩ / NT$ ${grandTwd1.toFixed(2)}</span></p>
+                            <p class="flex justify-between font-bold text-ocean-blue"><span>2台車總計：</span><span class="font-mono">${(grandKrw1 * 2).toLocaleString()} ₩ / NT$ ${(grandTwd1 * 2).toFixed(2)}</span></p>
                         </div>
                     </div>
                 </div>
