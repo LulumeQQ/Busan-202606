@@ -142,43 +142,12 @@
             background-color: #fee2e2;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 12px;
-        }
-
-        th, td {
-            border: 1px solid #e5e7eb;
-            padding: 8px 4px;
-            text-align: center;
-        }
-
-        th {
-            background-color: #0a66c2;
-            color: white;
-            font-weight: bold;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f9fafb;
-        }
-
-        .route-cell {
-            text-align: left;
-            padding: 8px;
-        }
-
-        .subtotal-row {
-            background-color: #e8f4ff;
-            font-weight: bold;
-        }
-
-        .total-row {
-            background-color: #0a66c2;
-            color: white;
-            font-weight: bold;
-        }
+        table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        th, td { border: 1px solid #e5e7eb; padding: 8px 4px; text-align: center; }
+        th { background-color: #0a66c2; color: white; font-weight: bold; }
+        tr:nth-child(even) { background-color: #f9fafb; }
+        .route-cell { text-align: left; padding: 8px; }
+        .subtotal-row { background-color: #e8f4ff; font-weight: bold; }
     </style>
 </head>
 <body class="flex flex-col h-screen overflow-hidden text-sm">
@@ -207,11 +176,11 @@
             </button>
             <button onclick="router('guide')" class="nav-btn group flex flex-col items-center flex-1 min-w-fit px-2" id="btn-guide">
                 <div class="nav-icon text-lg mb-1 text-gray-400 group-hover:text-ocean-blue transition-colors"><i class="fa-solid fa-map"></i></div>
-                <span class="text-[10px] text-gray-500 font-bold">美食與購物</span>
+                <span class="text-[10px] text-gray-500 font-bold">指南</span>
             </button>
             <button onclick="router('taxi')" class="nav-btn group flex flex-col items-center flex-1 min-w-fit px-2" id="btn-taxi">
                 <div class="nav-icon text-lg mb-1 text-gray-400 group-hover:text-ocean-blue transition-colors"><i class="fa-solid fa-car-side"></i></div>
-                <span class="text-[10px] text-gray-500 font-bold">計程車</span>
+                <span class="text-[10px] text-gray-500 font-bold">車費</span>
             </button>
             <button onclick="router('wallet')" class="nav-btn group flex flex-col items-center flex-1 min-w-fit px-2" id="btn-wallet">
                 <div class="nav-icon text-lg mb-1 text-gray-400 group-hover:text-ocean-blue transition-colors"><i class="fa-solid fa-calculator"></i></div>
@@ -255,7 +224,7 @@
                     { time: '17:00', title: '住宿：廣安里 Airbnb', desc: '', type: 'hotel', addr: 'https://naver.me/F5sw0Rir' },
                     { time: '17:30', title: '晚餐', desc: '廣安里海鮮鍋', type: 'food', addr: 'https://naver.me/GgWkHCBk', extraLink: 'https://reurl.cc/18da8Q' },
                     { time: '20:00', title: '閒逛', desc: 'Airbnb樓下有超商', type: 'shopping' },
-                    { time: '20:30', title: '廣安里好吃甜筒冰淇淋', desc: '交通(廣安里飯店 - 廣安里好吃甜筒冰淇淋)：\n走路8min', type: 'food', addr: 'https://naver.me/GgWkHCBk' }
+                    { time: '20:30', title: '廣安里好吃甜筒冰淇淋', desc: '交通(廣安里飯店 - 廣安里好吃甜筒冰淇淋)：\n走路8min', type: 'food', addr: 'https://naver.me/xM5FzFtO', extraLink: 'https://youtu.be/HNz9FphwMG4?si=E9x8L-ac2oWsDhNl' }
                 ],
                 d2: [
                     { time: '08:00', title: '早餐', desc: 'Airbnb樓下超商', type: 'food' },
@@ -312,7 +281,7 @@
                     { time: '09:00', title: '白淺灘文化村', desc: '交通(西面飯店 - 白淺灘文化村)：\n計程車27min (費用約12400韓元/245.94台幣)', type: 'play', addr: 'https://naver.me/GWW6PBsv' },
                     { time: '12:00', title: '中餐', desc: 'Burger yo海鮮漢堡，交通(白淺灘文化村 - 海鮮漢堡)：\n走路6min', type: 'food', addr: 'https://naver.me/FbVtW0JH', extraLink: 'https://reurl.cc/53YKVn' },
                     { time: '15:00', title: '三進魚板總店', desc: '交通(白淺灘文化村 - 三進魚板總店)：\n計程車9min (費用約5000韓元/99.17台幣)\n走路29min', type: 'play', addr: 'https://naver.me/539EkzeT', extraLink: 'https://www.instagram.com/reel/DWEP00qprUt/' },
-                    { time: '17:00', title: '西面-豬肉烤肉', desc: '交通(三進魚板總店 - 西面-豬肉烤肉)：\n計程車21min (費用約10800韓元/214.21台幣)', type: 'food', addr: 'https://naver.me/xLNcDiZe', extraLink: 'https://www.facebook.com/watch/?v=2374278089738626' },
+                    { time: '17:00', title: '晚餐', desc: '西面-豬肉烤肉', desc: '交通(三進魚板總店 - 西面-豬肉烤肉)：\n計程車21min (費用約10800韓元/214.21台幣)', type: 'food', addr: 'https://naver.me/xLNcDiZe', extraLink: 'https://www.facebook.com/watch/?v=2374278089738626' },
                     { time: '19:00', title: '住宿', desc: '回飯店休息，交通(西面-豬肉烤肉 - 西面飯店)：\n走路5min', type: 'hotel', addr: 'https://naver.me/x2YsHkT6' }
                 ],
                 d7: [
