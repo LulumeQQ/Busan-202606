@@ -142,7 +142,6 @@
             background-color: #fee2e2;
         }
 
-        /* Taxi Table Styles */
         table { width: 100%; border-collapse: collapse; font-size: 12px; }
         th, td { border: 1px solid #e5e7eb; padding: 8px 4px; text-align: center; }
         th { background-color: #0a66c2; color: white; font-weight: bold; }
@@ -202,7 +201,6 @@
     <div id="toast" class="toast">地址已複製</div>
 
     <script>
-        // 整合所有的靜態資料
         const tripData = {
             flights: [
                 { type: '去程', date: '06/26', code: 'KE 2086', route: 'TPE 12:00 ➝ PUS 15:30' },
@@ -305,21 +303,21 @@
                 ]
             },
             taxiFares: [
-                { date: '6/27 (D2)', time: '10:00', route: '廣安里飯店 - 膠囊列車尾浦站', krw: '9,900', twd: '196.36', toll: '' },
-                { date: '6/27 (D2)', time: '19:00', route: '釜山 X the SKY - 廣安里-無人機', krw: '9,600', twd: '190.41', toll: '' },
-                { date: '6/28 (D3)', time: '09:00', route: '廣安里飯店 - 松島海上纜車', krw: '19,900', twd: '422.46', toll: '1,400' },
-                { date: '6/28 (D3)', time: '12:00', route: '松島海上纜車 - 1969刀削麵', krw: '7,300', twd: '144.79', toll: '' },
-                { date: '6/28 (D3)', time: '15:30', route: '釜山塔 - Arte Museum', krw: '8,200', twd: '162.64', toll: '' },
-                { date: '6/28 (D3)', time: '18:00', route: 'Arte Museum - 明星一隻雞', krw: '7,300', twd: '144.79', toll: '' },
-                { date: '6/28 (D3)', time: '20:00', route: '明星一隻雞 - 廣安里飯店', krw: '15,500', twd: '335.19', toll: '1,400' },
-                { date: '6/29 (D4)', time: '08:00', route: '廣安里飯店 - 海東龍宮寺', krw: '14,800', twd: '313.38', toll: '1,000' },
-                { date: '6/29 (D4)', time: '20:30', route: '樂天outlet美食街 - 廣安里飯店', krw: '13,600', twd: '285.87', toll: '1,000' },
-                { date: '6/30 (D5)', time: '11:00', route: '廣安里飯店 - 西面飯店', krw: '10,300', twd: '204.29', toll: '' },
-                { date: '7/01 (D6)', time: '09:00', route: '西面飯店 - 白淺灘文化村', krw: '12,400', twd: '245.94', toll: '' },
-                { date: '7/01 (D6)', time: '15:00', route: '白淺灘文化村 - 三進魚板總店', krw: '5,000', twd: '99.17', toll: '' },
-                { date: '7/01 (D6)', time: '17:00', route: '三進魚板總店 - 西面-豬肉烤肉', krw: '10,800', twd: '214.21', toll: '' },
-                { date: '7/02 (D7)', time: '09:00', route: '西面飯店 - 甘川洞文化村', krw: '13,500', twd: '267.76', toll: '' },
-                { date: '7/02 (D7)', time: '12:00', route: '甘川洞文化村 - 南浦洞-辣炒雞', krw: '6,600', twd: '130.90', toll: '' }
+                { date: '6/27 (D2)', time: '10:00', route: '廣安里飯店 - 膠囊列車尾浦站', duration: '25min', krw: '9,900', twd: '196.36', toll: '' },
+                { date: '6/27 (D2)', time: '19:00', route: '釜山 X the SKY - 廣安里-無人機', duration: '31min', krw: '9,600', twd: '190.41', toll: '' },
+                { date: '6/28 (D3)', time: '09:00', route: '廣安里飯店 - 松島海上纜車', duration: '35min', krw: '19,900', twd: '422.46', toll: '1,400' },
+                { date: '6/28 (D3)', time: '12:00', route: '松島海上纜車 - 1969刀削麵', duration: '14min', krw: '7,300', twd: '144.79', toll: '' },
+                { date: '6/28 (D3)', time: '15:30', route: '釜山塔 - Arte Museum', duration: '20min', krw: '8,200', twd: '162.64', toll: '' },
+                { date: '6/28 (D3)', time: '18:00', route: 'Arte Museum - 明星一隻雞', duration: '14min', krw: '7,300', twd: '144.79', toll: '' },
+                { date: '6/28 (D3)', time: '20:00', route: '明星一隻雞 - 廣安里飯店', duration: '41min', krw: '15,500', twd: '335.19', toll: '1,400' },
+                { date: '6/29 (D4)', time: '08:00', route: '廣安里飯店 - 海東龍宮寺', duration: '24min', krw: '14,800', twd: '313.38', toll: '1,000' },
+                { date: '6/29 (D4)', time: '20:30', route: '樂天outlet美食街 - 廣安里飯店', duration: '24min', krw: '13,600', twd: '285.87', toll: '1,000' },
+                { date: '6/30 (D5)', time: '11:00', route: '廣安里飯店 - 西面飯店', duration: '23min', krw: '10,300', twd: '204.29', toll: '' },
+                { date: '7/01 (D6)', time: '09:00', route: '西面飯店 - 白淺灘文化村', duration: '27min', krw: '12,400', twd: '245.94', toll: '' },
+                { date: '7/01 (D6)', time: '15:00', route: '白淺灘文化村 - 三進魚板總店', duration: '9min', krw: '5,000', twd: '99.17', toll: '' },
+                { date: '7/01 (D6)', time: '17:00', route: '三進魚板總店 - 西面-豬肉烤肉', duration: '21min', krw: '10,800', twd: '214.21', toll: '' },
+                { date: '7/02 (D7)', time: '09:00', route: '西面飯店 - 甘川洞文化村', duration: '31min', krw: '13,500', twd: '267.76', toll: '' },
+                { date: '7/02 (D7)', time: '12:00', route: '甘川洞文化村 - 南浦洞-辣炒雞', duration: '14min', krw: '6,600', twd: '130.90', toll: '' }
             ],
             restaurants: [
                 { location: '廣安里', name: '廣安里海鮮鍋', date: '6/26 (Day 1)', time: '17:30', desc: '晚餐', addr: 'https://naver.me/GgWkHCBk', extraLink: 'https://reurl.cc/18da8Q' },
@@ -346,9 +344,8 @@
             }
         };
 
-        // 狀態變數
         let currentDay = 'd1';
-        let walletRate = parseFloat(localStorage.getItem('busan0704_rate')) || 0.024; // 預設韓幣轉台幣匯率可依當前調整
+        let walletRate = parseFloat(localStorage.getItem('busan0704_rate')) || 0.024;
         let expenses = JSON.parse(localStorage.getItem('busan0704_expenses')) || [];
         let checklistState = JSON.parse(localStorage.getItem('busan0704_checklist')) || {};
         let customChecklistItems = JSON.parse(localStorage.getItem('busan0704_custom_items')) || [];
@@ -365,12 +362,10 @@
             shop: 'fa-bag-shopping'
         };
 
-        // 初始化
         function init() {
             router('plan');
         }
 
-        // 路由切換
         function router(page) {
             document.querySelectorAll('.nav-btn .nav-icon').forEach(el => el.classList.replace('text-ocean-blue', 'text-gray-400'));
             const btn = document.getElementById('btn-' + page);
@@ -389,7 +384,6 @@
             }
         }
 
-        // ================== 行程頁面 ==================
         function renderPlan(container) {
             let flightHTML = `<div class="p-4 space-y-3">
                 <div class="bg-white p-4 rounded-3xl shadow-soft">
@@ -416,7 +410,7 @@
             let timelineHTML = `<div id="timeline-list" class="px-4 pb-8 space-y-4 min-h-screen">${renderDayItems(currentDay)}</div>`;
 
             container.innerHTML = flightHTML + switcherHTML + timelineHTML;
-            switchDay(currentDay); // 確保選中狀態正確
+            switchDay(currentDay);
         }
 
         function switchDay(day) {
@@ -494,10 +488,8 @@
             }).join('');
         }
 
-        // ================== 美食指南頁面 ==================
         function renderGuide(container) {
             const locationOrder = ['廣安里', '海雲台', '青沙浦', '機張', '西面', '南浦洞'];
-            
             let guideHTML = `<div class="p-4 space-y-6 pb-8">`;
             
             locationOrder.forEach(location => {
@@ -548,7 +540,6 @@
             container.innerHTML = guideHTML;
         }
 
-        // ================== 計程車費用頁面 ==================
         function renderTaxi(container) {
             let html = `
             <div class="p-4 animate-fade-in">
@@ -600,7 +591,6 @@
                 `;
             });
 
-            // 最後一筆小計
             if (currentDate !== '') {
                 html += `<tr class="subtotal-row"><td colspan="2" class="text-right pr-2 text-ocean-blue">小計</td><td class="text-ocean-blue font-bold">${dateTotal.toLocaleString()}</td></tr>`;
             }
@@ -635,7 +625,6 @@
             container.innerHTML = html;
         }
 
-        // ================== 記帳頁面 ==================
         function renderWallet(container) {
             const totalKrw = expenses.reduce((sum, item) => sum + item.amount, 0);
             const totalTwd = Math.round(totalKrw * walletRate);
@@ -741,7 +730,6 @@
             }
         }
 
-        // ================== 清單頁面 ==================
         function renderLists(container) {
             let displayLuggageItems = tripData.checklist.luggage.items.split('、').map(s => s.trim()).filter(s => s);
             if (customChecklistItems.length > 0) {
@@ -825,7 +813,7 @@
                     localStorage.setItem('busan0704_deleted_items', JSON.stringify(deletedListItems));
                     renderLists(document.getElementById('app-content'));
                 }
-            }, 600); // 設定長按時間 0.6 秒
+            }, 600);
         }
 
         function cancelLongPress() {
@@ -841,12 +829,10 @@
             localStorage.setItem('busan0704_custom_items', JSON.stringify(customChecklistItems));
             document.getElementById('memo-input').value = '';
             
-            // 重新渲染並展開行李清單
             renderLists(document.getElementById('app-content'));
             toggleList('luggage');
         }
 
-        // ================== 共用功能 ==================
         function copyAddr(text) {
             if (!text) return;
             navigator.clipboard.writeText(text).then(() => {
@@ -892,10 +878,7 @@
             modal.classList.remove('flex');
         }
 
-        // 啟動應用程式
         window.onload = init;
     </script>
 </body>
 </html>
-
-
