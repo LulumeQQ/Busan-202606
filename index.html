@@ -148,6 +148,11 @@
         tr:nth-child(even) { background-color: #f9fafb; }
         .route-cell { text-align: left; padding: 8px; }
         .subtotal-row { background-color: #e8f4ff; font-weight: bold; }
+        
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
     </style>
 </head>
 <body class="flex flex-col h-screen overflow-hidden text-sm">
@@ -189,6 +194,10 @@
             <button onclick="router('lists')" class="nav-btn group flex flex-col items-center flex-1 min-w-fit px-2" id="btn-lists">
                 <div class="nav-icon text-lg mb-1 text-gray-400 group-hover:text-ocean-blue transition-colors"><i class="fa-solid fa-list-check"></i></div>
                 <span class="text-[10px] text-gray-500 font-bold">清單</span>
+            </button>
+            <button onclick="router('info')" class="nav-btn group flex flex-col items-center flex-1 min-w-fit px-2" id="btn-info">
+                <div class="nav-icon text-lg mb-1 text-gray-400 group-hover:text-ocean-blue transition-colors"><i class="fa-solid fa-circle-info"></i></div>
+                <span class="text-[10px] text-gray-500 font-bold">資訊</span>
             </button>
         </div>
     </nav>
@@ -434,6 +443,7 @@
                 case 'taxi': renderTaxi(content); break;
                 case 'wallet': renderWallet(content); break;
                 case 'lists': renderLists(content); break;
+                case 'info': renderInfo(content); break;
             }
         }
 
@@ -582,7 +592,6 @@
                 const key = `${dayStr}-${fare.route}`;
 
                 if (dailyAggregated.has(key)) {
-                    // 如果這天已經有相同的路線，就把金額加上去
                     let existing = dailyAggregated.get(key);
                     existing.krw1 += totalKrw1;
                     existing.twd1 += twdAmount;
@@ -597,7 +606,6 @@
                 }
             });
 
-            // 把整理好的資料印出來
             dailyAggregated.forEach((data, key) => {
                 if (data.date !== currentDate && currentDate !== '') {
                     html += `
@@ -633,7 +641,6 @@
                 `;
             });
 
-            // 最後一天的當日總計
             if (currentDate !== '') {
                 html += `
                     <tr class="subtotal-row">
@@ -662,7 +669,7 @@
             container.innerHTML = html;
         }
 
-        // ================= 導覽 (原指南) =================
+        // ================= 導覽 =================
         function renderGuide(container) {
             const locationOrder = ['廣安里', '海雲台', '青沙浦', '機張', '西面', '南浦洞'];
             const restaurantsByLocation = {};
@@ -699,7 +706,7 @@
                                     <span><i class="fa-solid fa-utensils mr-1"></i>${restaurant.desc}</span>
                                 </div>
                                 
-                                <div class="flex gap-2">
+                                <div class="flex gap-2 mt-3 border-t border-gray-100 pt-3">
                         `;
                         
                         if (restaurant.addr) {
@@ -836,7 +843,7 @@
             }
         }
 
-        // ================= 清單與實用資訊 =================
+        // ================= 清單 =================
         function renderLists(container) {
             let displayLuggageItems = tripData.checklist.luggage.items;
             if (customChecklistItems.length > 0) {
@@ -845,17 +852,17 @@
             const list = { ...tripData.checklist.luggage, items: displayLuggageItems };
             
             container.innerHTML = `
-            <div class="p-4 space-y-6 animate-fade-in flex">
-                <div class="flex-1 pr-2 border-r border-gray-200">
+            <div class="p-4 space-y-6 animate-fade-in">
+                <div class="bg-white rounded-2xl p-5 shadow-soft border border-gray-50">
                     <div class="flex justify-between items-center mb-4 border-l-4 border-ocean-blue pl-2">
                         <h3 class="font-bold text-muji-text flex items-center gap-2">
                             <i class="fa-solid ${list.icon} ${list.color}"></i>
                             ${list.title}
                         </h3>
                     </div>
-                    <div class="space-y-2 max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar">
+                    <div class="grid grid-cols-2 gap-x-3 gap-y-3">
                         ${list.items.filter(item => !deletedListItems[item]).map(item => `
-                            <label class="flex items-center space-x-2 p-2 rounded-xl bg-white shadow-sm border border-gray-100 hover:bg-blue-50 cursor-pointer group transition-colors select-none" 
+                            <label class="flex items-center space-x-2 p-2 rounded-xl bg-gray-50 hover:bg-blue-50 cursor-pointer group transition-colors select-none" 
                                    data-item="${item}" 
                                    onmousedown="startLongPress(this)" onmouseup="cancelLongPress()" onmouseleave="cancelLongPress()" 
                                    ontouchstart="startLongPress(this)" ontouchend="cancelLongPress()">
@@ -867,40 +874,65 @@
                             </label>
                         `).join('')}
                     </div>
-                    <p class="text-[10px] text-gray-400 mt-3 text-center"><i class="fa-solid fa-lightbulb text-cat-orange mr-1"></i>長按項目可刪除</p>
-
-                    <div class="mt-4 bg-white rounded-2xl p-3 shadow-soft border border-gray-50">
-                        <textarea id="memo-input" class="w-full bg-muji-bg rounded-xl p-2 text-xs leading-relaxed outline-none resize-none border border-transparent focus:border-ocean-blue h-12" placeholder="新增物品 (逗號分隔)"></textarea>
-                        <button onclick="saveMemoAsItem()" class="w-full mt-2 bg-ocean-blue text-white py-1.5 rounded-xl text-xs font-bold shadow-md active:scale-95 transition-transform">加入</button>
-                    </div>
+                    <p class="text-[10px] text-gray-400 mt-5 text-center bg-gray-50 py-1 rounded-full"><i class="fa-solid fa-lightbulb text-cat-orange mr-1"></i>長按項目可刪除</p>
                 </div>
 
-                <div class="w-1/3 pl-3">
-                    <h3 class="font-bold text-muji-text mb-4 border-l-4 border-cat-orange pl-2">實用資訊</h3>
+                <div class="bg-white rounded-2xl p-5 shadow-soft border border-gray-50">
+                    <h3 class="font-bold text-muji-text mb-3 border-l-4 border-ocean-blue pl-2">新增備忘錄 / 物品</h3>
+                    <textarea id="memo-input" class="w-full bg-muji-bg rounded-xl p-3 text-sm leading-relaxed outline-none resize-none border border-transparent focus:border-ocean-blue h-20" placeholder="輸入要帶的物品 (可使用逗號分隔多項)"></textarea>
+                    <button onclick="saveMemoAsItem()" class="w-full mt-3 bg-ocean-blue text-white py-2.5 rounded-xl text-sm font-bold shadow-md active:scale-95 transition-transform">加入行李清單</button>
+                </div>
+            </div>`;
+        }
+        
+        // ================= 資訊頁面 =================
+        function renderInfo(container) {
+            container.innerHTML = `
+            <div class="p-4 space-y-4 animate-fade-in">
+                <div class="bg-white rounded-2xl shadow-soft p-5 border border-gray-50">
+                    <h3 class="font-bold text-muji-text mb-4 border-l-4 border-cat-orange pl-2 text-base">實用連結</h3>
                     <div class="space-y-3">
-                        <a href="https://www.gwangallimdrone.co.kr" target="_blank" class="block bg-white p-3 rounded-xl shadow-sm border border-gray-100 hover:border-cat-orange transition-colors">
-                            <div class="font-bold text-xs text-muji-text mb-1">無人機官網</div>
-                            <div class="text-[10px] text-ocean-blue truncate">gwangallimdrone.co.kr</div>
+                        <a href="https://www.gwangallimdrone.co.kr" target="_blank" class="block bg-gray-50 p-4 rounded-xl shadow-sm border border-gray-100 hover:border-cat-orange hover:bg-orange-50 transition-colors flex justify-between items-center">
+                            <div>
+                                <div class="font-bold text-sm text-muji-text mb-1">無人機官網</div>
+                                <div class="text-[10px] text-gray-500">gwangallimdrone.co.kr</div>
+                            </div>
+                            <i class="fa-solid fa-chevron-right text-gray-300"></i>
                         </a>
-                        <a href="https://www.bluelinepark.com/chn/" target="_blank" class="block bg-white p-3 rounded-xl shadow-sm border border-gray-100 hover:border-cat-orange transition-colors">
-                            <div class="font-bold text-xs text-muji-text mb-1">海岸/膠囊列車</div>
-                            <div class="text-[10px] text-ocean-blue truncate">bluelinepark.com</div>
+                        <a href="https://www.bluelinepark.com/chn/" target="_blank" class="block bg-gray-50 p-4 rounded-xl shadow-sm border border-gray-100 hover:border-cat-orange hover:bg-orange-50 transition-colors flex justify-between items-center">
+                            <div>
+                                <div class="font-bold text-sm text-muji-text mb-1">海岸/膠囊列車</div>
+                                <div class="text-[10px] text-gray-500">bluelinepark.com</div>
+                            </div>
+                            <i class="fa-solid fa-chevron-right text-gray-300"></i>
                         </a>
-                        <a href="https://zh.busanaircruise.co.kr/main/main.html" target="_blank" class="block bg-white p-3 rounded-xl shadow-sm border border-gray-100 hover:border-cat-orange transition-colors">
-                            <div class="font-bold text-xs text-muji-text mb-1">松島纜車</div>
-                            <div class="text-[10px] text-ocean-blue truncate">busanaircruise.co.kr</div>
+                        <a href="https://zh.busanaircruise.co.kr/main/main.html" target="_blank" class="block bg-gray-50 p-4 rounded-xl shadow-sm border border-gray-100 hover:border-cat-orange hover:bg-orange-50 transition-colors flex justify-between items-center">
+                            <div>
+                                <div class="font-bold text-sm text-muji-text mb-1">松島纜車</div>
+                                <div class="text-[10px] text-gray-500">busanaircruise.co.kr</div>
+                            </div>
+                            <i class="fa-solid fa-chevron-right text-gray-300"></i>
                         </a>
-                        <a href="https://busan.skylineluge.kr/en/things-to-do/" target="_blank" class="block bg-white p-3 rounded-xl shadow-sm border border-gray-100 hover:border-cat-orange transition-colors">
-                            <div class="font-bold text-xs text-muji-text mb-1">Skyline luge</div>
-                            <div class="text-[10px] text-ocean-blue truncate">skylineluge.kr</div>
+                        <a href="https://busan.skylineluge.kr/en/things-to-do/" target="_blank" class="block bg-gray-50 p-4 rounded-xl shadow-sm border border-gray-100 hover:border-cat-orange hover:bg-orange-50 transition-colors flex justify-between items-center">
+                            <div>
+                                <div class="font-bold text-sm text-muji-text mb-1">Skyline luge</div>
+                                <div class="text-[10px] text-gray-500">skylineluge.kr</div>
+                            </div>
+                            <i class="fa-solid fa-chevron-right text-gray-300"></i>
                         </a>
-                        <a href="https://adventurebusan.lotteworld.com/" target="_blank" class="block bg-white p-3 rounded-xl shadow-sm border border-gray-100 hover:border-cat-orange transition-colors">
-                            <div class="font-bold text-xs text-muji-text mb-1">釜山樂天世界</div>
-                            <div class="text-[10px] text-ocean-blue truncate">lotteworld.com</div>
+                        <a href="https://adventurebusan.lotteworld.com/" target="_blank" class="block bg-gray-50 p-4 rounded-xl shadow-sm border border-gray-100 hover:border-cat-orange hover:bg-orange-50 transition-colors flex justify-between items-center">
+                            <div>
+                                <div class="font-bold text-sm text-muji-text mb-1">釜山樂天世界</div>
+                                <div class="text-[10px] text-gray-500">lotteworld.com</div>
+                            </div>
+                            <i class="fa-solid fa-chevron-right text-gray-300"></i>
                         </a>
-                        <a href="https://lizzzstyle.tw/busan-taxfree/" target="_blank" class="block bg-white p-3 rounded-xl shadow-sm border border-gray-100 hover:border-cat-orange transition-colors">
-                            <div class="font-bold text-xs text-muji-text mb-1">退稅教學</div>
-                            <div class="text-[10px] text-ocean-blue truncate">lizzzstyle.tw</div>
+                        <a href="https://lizzzstyle.tw/busan-taxfree/" target="_blank" class="block bg-blue-50 p-4 rounded-xl shadow-sm border border-blue-100 hover:border-ocean-blue transition-colors flex justify-between items-center">
+                            <div>
+                                <div class="font-bold text-sm text-ocean-blue mb-1">退稅教學 <i class="fa-solid fa-file-invoice-dollar ml-1"></i></div>
+                                <div class="text-[10px] text-blue-400">lizzzstyle.tw</div>
+                            </div>
+                            <i class="fa-solid fa-chevron-right text-blue-300"></i>
                         </a>
                     </div>
                 </div>
@@ -985,21 +1017,10 @@
         window.onload = init;
     </script>
     <style>
-        /* 針對清單列表加上自訂滾動條，讓畫面更整潔 */
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 4px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: #f1f1f1; 
-            border-radius: 4px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #d1d5db; 
-            border-radius: 4px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #9ca3af; 
-        }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
     </style>
 </body>
 </html>
