@@ -176,7 +176,7 @@
             </button>
             <button onclick="router('guide')" class="nav-btn group flex flex-col items-center flex-1 min-w-fit px-2" id="btn-guide">
                 <div class="nav-icon text-lg mb-1 text-gray-400 group-hover:text-ocean-blue transition-colors"><i class="fa-solid fa-map"></i></div>
-                <span class="text-[10px] text-gray-500 font-bold">指南</span>
+                <span class="text-[10px] text-gray-500 font-bold">導覽</span>
             </button>
             <button onclick="router('taxi')" class="nav-btn group flex flex-col items-center flex-1 min-w-fit px-2" id="btn-taxi">
                 <div class="nav-icon text-lg mb-1 text-gray-400 group-hover:text-ocean-blue transition-colors"><i class="fa-solid fa-car-side"></i></div>
@@ -281,7 +281,7 @@
                     { time: '09:00', title: '白淺灘文化村', desc: '交通(西面飯店 - 白淺灘文化村)：\n計程車27min (費用約12400韓元/245.94台幣)', type: 'play', addr: 'https://naver.me/GWW6PBsv' },
                     { time: '12:00', title: '中餐', desc: 'Burger yo海鮮漢堡，交通(白淺灘文化村 - 海鮮漢堡)：\n走路6min', type: 'food', addr: 'https://naver.me/FbVtW0JH', extraLink: 'https://reurl.cc/53YKVn' },
                     { time: '15:00', title: '三進魚板總店', desc: '交通(白淺灘文化村 - 三進魚板總店)：\n計程車9min (費用約5000韓元/99.17台幣)\n走路29min', type: 'play', addr: 'https://naver.me/539EkzeT', extraLink: 'https://www.instagram.com/reel/DWEP00qprUt/' },
-                    { time: '17:00', title: '晚餐', desc: '西面-豬肉烤肉', desc: '交通(三進魚板總店 - 西面-豬肉烤肉)：\n計程車21min (費用約10800韓元/214.21台幣)', type: 'food', addr: 'https://naver.me/xLNcDiZe', extraLink: 'https://www.facebook.com/watch/?v=2374278089738626' },
+                    { time: '17:00', title: '晚餐', desc: '西面-豬肉烤肉，交通(三進魚板總店 - 西面-豬肉烤肉)：\n計程車21min (費用約10800韓元/214.21台幣)', type: 'food', addr: 'https://naver.me/xLNcDiZe', extraLink: 'https://www.facebook.com/watch/?v=2374278089738626' },
                     { time: '19:00', title: '住宿', desc: '回飯店休息，交通(西面-豬肉烤肉 - 西面飯店)：\n走路5min', type: 'hotel', addr: 'https://naver.me/x2YsHkT6' }
                 ],
                 d7: [
@@ -389,13 +389,9 @@
                     title: '旅遊行李清單',
                     icon: 'fa-suitcase-rolling',
                     color: 'text-blue-500',
-                    items: '護照x2、衣服3件x2、防曬乳、帽子、太陽眼鏡、口罩、運動鞋、涼鞋、內衣褲、襪子、毛巾、牙刷、牙膏、洗面乳、護髮乳、吹風機、化妝品、眼鏡、雨傘、行李箱、行李牌、手機、充電器、行動電源、耳機、護照套、登機證夾、旅遊用品、藥物、美妝品'
-                },
-                shopping: {
-                    title: '購物清單',
-                    icon: 'fa-bag-shopping',
-                    color: 'text-pink-500',
-                    items: '面膜、化妝品、護膚品、零食、伴手禮、衣服、鞋子'
+                    items: [
+                        '護照x4', 'E-SIM', '信用卡', '發熱褲1件x3', '褲子/裙子3件x4', '襪子6雙x4', '圍巾1條x4', '卸妝乳', '保養品', '護唇膏', '牙刷', '泳衣x4', '蛙鏡x4', '折疊衣架', '衛生棉', '濕紙巾', '充電Hub', '充氣幫浦', '備用藥', '外幣', '台灣駕照+日文譯本', '發熱衣3件x4', '衣服3件x4', '內衣褲8套x4', '背心1件x3', '洗面乳', '化妝品', '乳液', '防曬', '牙膏', '泳帽x4', '浴巾x4', '尿布', '面紙', '手機/手錶充電線', '各種充電線材', '行李袋x4', '克流感', '指甲刀', '口罩', '暈車藥', '體溫計', '日常藥膏'
+                    ]
                 }
             }
         };
@@ -567,39 +563,86 @@
                         <tbody>
             `;
 
-            let grandKrw1 = 0;
-            let grandTwd1 = 0;
+            let currentDate = '';
+            let dateTotalKrw = 0;
+            let dateTotalTwd = 0;
+            let grandTotalKrw = 0;
+            let grandTotalTwd = 0;
+            
+            // 用來過濾同一天相同項目的 Map (key: date + route)
+            let dailyAggregated = new Map();
 
             tripData.taxiFares.forEach((fare) => {
-                // 解析原始金額字串，將韓幣與過路費加總
-                let krwBase = parseInt(fare.krw.replace(/,/g, '')) || 0;
-                let toll = fare.krwToll ? parseInt(fare.krwToll.replace(/[^0-9]/g, '')) : 0;
-                let totalKrw1 = krwBase + toll;
-                let totalKrw2 = totalKrw1 * 2;
-                
-                // 解析台幣
-                let twdBase = parseFloat(fare.twd) || 0;
-                let twdTotal1 = twdBase;
-                let twdTotal2 = twdBase * 2;
+                let krwAmount = parseInt(fare.krw.replace(/,/g, ''));
+                let tollAmount = fare.krwToll ? parseInt(fare.krwToll.replace(/[^0-9]/g, '')) : 0;
+                let twdAmount = parseFloat(fare.twd);
+                let totalKrw1 = krwAmount + tollAmount;
 
-                grandKrw1 += totalKrw1;
-                grandTwd1 += twdTotal1;
+                const dayStr = fare.date.split(' ')[0];
+                const key = `${dayStr}-${fare.route}`;
+
+                if (dailyAggregated.has(key)) {
+                    // 如果這天已經有相同的路線，就把金額加上去
+                    let existing = dailyAggregated.get(key);
+                    existing.krw1 += totalKrw1;
+                    existing.twd1 += twdAmount;
+                } else {
+                    dailyAggregated.set(key, {
+                        date: dayStr,
+                        route: fare.route,
+                        krw1: totalKrw1,
+                        twd1: twdAmount,
+                        krwTollDisplay: fare.krwToll ? `<br><span class="text-[10px] text-cat-orange">${fare.krwToll}</span>` : ''
+                    });
+                }
+            });
+
+            // 把整理好的資料印出來
+            dailyAggregated.forEach((data, key) => {
+                if (data.date !== currentDate && currentDate !== '') {
+                    html += `
+                        <tr class="subtotal-row">
+                            <td colspan="2" class="text-right pr-2">當日總計</td>
+                            <td class="text-ocean-blue font-bold">${dateTotalKrw.toLocaleString()} ₩<br><span class="text-[10px] text-gray-500">NT$ ${dateTotalTwd.toFixed(2)}</span></td>
+                            <td class="text-ocean-blue font-bold">${(dateTotalKrw * 2).toLocaleString()} ₩<br><span class="text-[10px] text-gray-400">NT$ ${(dateTotalTwd * 2).toFixed(2)}</span></td>
+                        </tr>
+                    `;
+                    dateTotalKrw = 0;
+                    dateTotalTwd = 0;
+                }
+
+                currentDate = data.date;
+                dateTotalKrw += data.krw1;
+                dateTotalTwd += data.twd1;
+                grandTotalKrw += data.krw1;
+                grandTotalTwd += data.twd1;
 
                 html += `
                     <tr>
-                        <td class="text-xs whitespace-nowrap">${fare.date.split(' ')[0]}</td>
-                        <td class="route-cell text-xs">${fare.route}</td>
+                        <td class="text-xs whitespace-nowrap">${data.date}</td>
+                        <td class="route-cell text-xs">${data.route}${data.krwTollDisplay}</td>
                         <td class="text-xs font-mono">
-                            ${totalKrw1.toLocaleString()} ₩<br>
-                            <span class="text-[10px] text-gray-500">NT$ ${twdTotal1.toFixed(2)}</span>
+                            ${data.krw1.toLocaleString()} ₩<br>
+                            <span class="text-[10px] text-gray-500">NT$ ${data.twd1.toFixed(2)}</span>
                         </td>
                         <td class="text-xs font-mono text-ocean-blue font-bold">
-                            ${totalKrw2.toLocaleString()} ₩<br>
-                            <span class="text-[10px] text-gray-400">NT$ ${twdTotal2.toFixed(2)}</span>
+                            ${(data.krw1 * 2).toLocaleString()} ₩<br>
+                            <span class="text-[10px] text-gray-400">NT$ ${(data.twd1 * 2).toFixed(2)}</span>
                         </td>
                     </tr>
                 `;
             });
+
+            // 最後一天的當日總計
+            if (currentDate !== '') {
+                html += `
+                    <tr class="subtotal-row">
+                        <td colspan="2" class="text-right pr-2">當日總計</td>
+                        <td class="text-ocean-blue font-bold">${dateTotalKrw.toLocaleString()} ₩<br><span class="text-[10px] text-gray-500">NT$ ${dateTotalTwd.toFixed(2)}</span></td>
+                        <td class="text-ocean-blue font-bold">${(dateTotalKrw * 2).toLocaleString()} ₩<br><span class="text-[10px] text-gray-400">NT$ ${(dateTotalTwd * 2).toFixed(2)}</span></td>
+                    </tr>
+                `;
+            }
 
             html += `
                         </tbody>
@@ -608,8 +651,8 @@
                     <div class="mt-6 p-4 bg-ocean-light rounded-xl border border-blue-200">
                         <h3 class="font-bold text-ocean-blue mb-3 text-sm">💰 全程費用總計 (共 ${tripData.taxiFares.length} 趟)</h3>
                         <div class="space-y-2 text-xs text-muji-text">
-                            <p class="flex justify-between font-bold"><span>1台車總計：</span><span class="font-mono">${grandKrw1.toLocaleString()} ₩ / NT$ ${grandTwd1.toFixed(2)}</span></p>
-                            <p class="flex justify-between font-bold text-ocean-blue"><span>2台車總計：</span><span class="font-mono">${(grandKrw1 * 2).toLocaleString()} ₩ / NT$ ${(grandTwd1 * 2).toFixed(2)}</span></p>
+                            <p class="flex justify-between font-bold"><span>1台車總計：</span><span class="font-mono">${grandTotalKrw.toLocaleString()} ₩ / NT$ ${grandTotalTwd.toFixed(2)}</span></p>
+                            <p class="flex justify-between font-bold text-ocean-blue"><span>2台車總計：</span><span class="font-mono">${(grandTotalKrw * 2).toLocaleString()} ₩ / NT$ ${(grandTotalTwd * 2).toFixed(2)}</span></p>
                         </div>
                     </div>
                 </div>
@@ -619,7 +662,7 @@
             container.innerHTML = html;
         }
 
-        // ================= 指南 =================
+        // ================= 導覽 (原指南) =================
         function renderGuide(container) {
             const locationOrder = ['廣安里', '海雲台', '青沙浦', '機張', '西面', '南浦洞'];
             const restaurantsByLocation = {};
@@ -654,13 +697,6 @@
                                 <div class="flex gap-3 text-xs text-gray-500 mb-3">
                                     <span><i class="fa-solid fa-clock mr-1"></i>${restaurant.time}</span>
                                     <span><i class="fa-solid fa-utensils mr-1"></i>${restaurant.desc}</span>
-                                </div>
-                                
-                                <div class="w-full h-28 bg-gray-50 hover:bg-gray-100 transition cursor-pointer rounded-xl mb-3 flex items-center justify-center border border-dashed border-gray-200" onclick="openModal('https://via.placeholder.com/600x400/f3f4f6/9ca3af?text=Image+Not+Found')">
-                                    <div class="text-center">
-                                        <i class="fa-solid fa-image text-2xl text-gray-300 mb-1"></i>
-                                        <p class="text-[10px] text-gray-400">點擊查看照片</p>
-                                    </div>
                                 </div>
                                 
                                 <div class="flex gap-2">
@@ -800,73 +836,75 @@
             }
         }
 
-        // ================= 清單 =================
+        // ================= 清單與實用資訊 =================
         function renderLists(container) {
-            let displayLuggageItems = tripData.checklist.luggage.items.split('、').map(s => s.trim()).filter(s => s);
+            let displayLuggageItems = tripData.checklist.luggage.items;
             if (customChecklistItems.length > 0) {
                 displayLuggageItems = [...customChecklistItems, ...displayLuggageItems];
             }
-            const renderData = {
-                luggage: { ...tripData.checklist.luggage, items: displayLuggageItems },
-                shopping: { ...tripData.checklist.shopping, items: tripData.checklist.shopping.items.split('、').map(s => s.trim()).filter(s => s) }
-            };
+            const list = { ...tripData.checklist.luggage, items: displayLuggageItems };
             
             container.innerHTML = `
-            <div class="p-4 space-y-6 animate-fade-in">
-                <div class="grid grid-cols-2 gap-4">
-                    ${Object.keys(renderData).map(key => {
-                        const list = renderData[key];
-                        return `
-                        <div class="bg-white rounded-2xl p-5 shadow-soft cursor-pointer hover:shadow-lg transition-all active:scale-95 flex flex-col items-center justify-center gap-3 h-32 border border-gray-50" onclick="toggleList('${key}')">
-                            <i class="fa-solid ${list.icon} text-4xl ${list.color}"></i>
-                            <h3 class="font-bold text-muji-text text-sm">${list.title}</h3>
-                        </div>
-                        `;
-                    }).join('')}
+            <div class="p-4 space-y-6 animate-fade-in flex">
+                <div class="flex-1 pr-2 border-r border-gray-200">
+                    <div class="flex justify-between items-center mb-4 border-l-4 border-ocean-blue pl-2">
+                        <h3 class="font-bold text-muji-text flex items-center gap-2">
+                            <i class="fa-solid ${list.icon} ${list.color}"></i>
+                            ${list.title}
+                        </h3>
+                    </div>
+                    <div class="space-y-2 max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar">
+                        ${list.items.filter(item => !deletedListItems[item]).map(item => `
+                            <label class="flex items-center space-x-2 p-2 rounded-xl bg-white shadow-sm border border-gray-100 hover:bg-blue-50 cursor-pointer group transition-colors select-none" 
+                                   data-item="${item}" 
+                                   onmousedown="startLongPress(this)" onmouseup="cancelLongPress()" onmouseleave="cancelLongPress()" 
+                                   ontouchstart="startLongPress(this)" ontouchend="cancelLongPress()">
+                                <div class="relative flex items-center flex-shrink-0">
+                                    <input type="checkbox" onchange="toggleCheck('${item}')" ${checklistState[item] ? 'checked' : ''} class="peer h-4 w-4 cursor-pointer appearance-none border-2 border-gray-300 rounded bg-white checked:bg-ocean-blue checked:border-ocean-blue transition-colors">
+                                    <i class="fa-solid fa-check text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[10px] opacity-0 peer-checked:opacity-100 pointer-events-none"></i>
+                                </div>
+                                <span class="text-xs text-gray-600 peer-checked:text-gray-300 peer-checked:line-through truncate font-medium">${item}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                    <p class="text-[10px] text-gray-400 mt-3 text-center"><i class="fa-solid fa-lightbulb text-cat-orange mr-1"></i>長按項目可刪除</p>
+
+                    <div class="mt-4 bg-white rounded-2xl p-3 shadow-soft border border-gray-50">
+                        <textarea id="memo-input" class="w-full bg-muji-bg rounded-xl p-2 text-xs leading-relaxed outline-none resize-none border border-transparent focus:border-ocean-blue h-12" placeholder="新增物品 (逗號分隔)"></textarea>
+                        <button onclick="saveMemoAsItem()" class="w-full mt-2 bg-ocean-blue text-white py-1.5 rounded-xl text-xs font-bold shadow-md active:scale-95 transition-transform">加入</button>
+                    </div>
                 </div>
 
-                ${Object.keys(renderData).map(key => {
-                    const list = renderData[key];
-                    return `
-                    <div id="list-content-${key}" class="hidden bg-white rounded-2xl p-5 shadow-soft animate-fade-in border border-gray-50">
-                        <div class="flex justify-between items-center mb-4 border-l-4 border-ocean-blue pl-2">
-                            <h3 class="font-bold text-muji-text">${list.title}</h3>
-                            <button onclick="toggleList('${key}')" class="text-gray-400 p-1"><i class="fa-solid fa-xmark"></i></button>
-                        </div>
-                        <div class="grid grid-cols-2 gap-x-3 gap-y-3">
-                            ${list.items.filter(item => !deletedListItems[item]).map(item => `
-                                <label class="flex items-center space-x-2 p-2 rounded-xl bg-gray-50 hover:bg-blue-50 cursor-pointer group transition-colors select-none" 
-                                       data-item="${item}" data-list="${key}" 
-                                       onmousedown="startLongPress(this)" onmouseup="cancelLongPress()" onmouseleave="cancelLongPress()" 
-                                       ontouchstart="startLongPress(this)" ontouchend="cancelLongPress()">
-                                    <div class="relative flex items-center flex-shrink-0">
-                                        <input type="checkbox" onchange="toggleCheck('${item}')" ${checklistState[item] ? 'checked' : ''} class="peer h-4 w-4 cursor-pointer appearance-none border-2 border-gray-300 rounded bg-white checked:bg-ocean-blue checked:border-ocean-blue transition-colors">
-                                        <i class="fa-solid fa-check text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[10px] opacity-0 peer-checked:opacity-100 pointer-events-none"></i>
-                                    </div>
-                                    <span class="text-xs text-gray-600 peer-checked:text-gray-300 peer-checked:line-through truncate font-medium">${item}</span>
-                                </label>
-                            `).join('')}
-                        </div>
-                        <p class="text-[10px] text-gray-400 mt-5 text-center bg-gray-50 py-1 rounded-full"><i class="fa-solid fa-lightbulb text-cat-orange mr-1"></i>長按項目可刪除</p>
+                <div class="w-1/3 pl-3">
+                    <h3 class="font-bold text-muji-text mb-4 border-l-4 border-cat-orange pl-2">實用資訊</h3>
+                    <div class="space-y-3">
+                        <a href="https://www.gwangallimdrone.co.kr" target="_blank" class="block bg-white p-3 rounded-xl shadow-sm border border-gray-100 hover:border-cat-orange transition-colors">
+                            <div class="font-bold text-xs text-muji-text mb-1">無人機官網</div>
+                            <div class="text-[10px] text-ocean-blue truncate">gwangallimdrone.co.kr</div>
+                        </a>
+                        <a href="https://www.bluelinepark.com/chn/" target="_blank" class="block bg-white p-3 rounded-xl shadow-sm border border-gray-100 hover:border-cat-orange transition-colors">
+                            <div class="font-bold text-xs text-muji-text mb-1">海岸/膠囊列車</div>
+                            <div class="text-[10px] text-ocean-blue truncate">bluelinepark.com</div>
+                        </a>
+                        <a href="https://zh.busanaircruise.co.kr/main/main.html" target="_blank" class="block bg-white p-3 rounded-xl shadow-sm border border-gray-100 hover:border-cat-orange transition-colors">
+                            <div class="font-bold text-xs text-muji-text mb-1">松島纜車</div>
+                            <div class="text-[10px] text-ocean-blue truncate">busanaircruise.co.kr</div>
+                        </a>
+                        <a href="https://busan.skylineluge.kr/en/things-to-do/" target="_blank" class="block bg-white p-3 rounded-xl shadow-sm border border-gray-100 hover:border-cat-orange transition-colors">
+                            <div class="font-bold text-xs text-muji-text mb-1">Skyline luge</div>
+                            <div class="text-[10px] text-ocean-blue truncate">skylineluge.kr</div>
+                        </a>
+                        <a href="https://adventurebusan.lotteworld.com/" target="_blank" class="block bg-white p-3 rounded-xl shadow-sm border border-gray-100 hover:border-cat-orange transition-colors">
+                            <div class="font-bold text-xs text-muji-text mb-1">釜山樂天世界</div>
+                            <div class="text-[10px] text-ocean-blue truncate">lotteworld.com</div>
+                        </a>
+                        <a href="https://lizzzstyle.tw/busan-taxfree/" target="_blank" class="block bg-white p-3 rounded-xl shadow-sm border border-gray-100 hover:border-cat-orange transition-colors">
+                            <div class="font-bold text-xs text-muji-text mb-1">退稅教學</div>
+                            <div class="text-[10px] text-ocean-blue truncate">lizzzstyle.tw</div>
+                        </a>
                     </div>
-                    `;
-                }).join('')}
-
-                <div class="bg-white rounded-2xl p-5 shadow-soft border border-gray-50">
-                    <h3 class="font-bold text-muji-text mb-3 border-l-4 border-ocean-blue pl-2">新增備忘錄 / 物品</h3>
-                    <textarea id="memo-input" class="w-full bg-muji-bg rounded-xl p-3 text-sm leading-relaxed outline-none resize-none border border-transparent focus:border-ocean-blue h-20" placeholder="輸入要帶的物品 (可使用逗號分隔多項)"></textarea>
-                    <button onclick="saveMemoAsItem()" class="w-full mt-3 bg-ocean-blue text-white py-2.5 rounded-xl text-sm font-bold shadow-md active:scale-95 transition-transform">加入行李清單</button>
                 </div>
             </div>`;
-        }
-
-        function toggleList(key) {
-            document.querySelectorAll('[id^="list-content-"]').forEach(el => el.classList.add('hidden'));
-            const target = document.getElementById(`list-content-${key}`);
-            if(target) {
-                target.classList.remove('hidden');
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
         }
 
         function toggleCheck(item) {
@@ -901,7 +939,6 @@
             document.getElementById('memo-input').value = '';
             
             renderLists(document.getElementById('app-content'));
-            toggleList('luggage');
         }
 
         // ================= 共用功能 =================
@@ -947,5 +984,22 @@
 
         window.onload = init;
     </script>
+    <style>
+        /* 針對清單列表加上自訂滾動條，讓畫面更整潔 */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #d1d5db; 
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af; 
+        }
+    </style>
 </body>
 </html>
