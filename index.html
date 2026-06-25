@@ -316,6 +316,7 @@
                 ]
             },
             restaurants: [
+                { location: '西面', name: '西面-老奶奶換錢所', date: '推薦', time: '', desc: '換錢所', addr: 'https://naver.me/5g4IrLIt', extraLink: 'https://reurl.cc/ovWakj' },
                 { location: '廣安里', name: '廣安里海景咖啡廰', date: '推薦', time: '', desc: '咖啡/甜點', addr: 'https://naver.me/5l2PCC2r', extraLink: 'https://www.youtube.com/watch?v=HNz9FphwMG4' },
                 { location: '廣安里', name: '廣安里-JoJo刀削麵', date: '推薦', time: '', desc: '午餐/晚餐', addr: 'https://naver.me/5vJQY3ZX', extraLink: 'https://www.youtube.com/watch?v=LH3HOBk203I' },
                 { location: '廣安里', name: '廣安里烤排骨(豬肉)', date: '推薦', time: '', desc: '晚餐', addr: 'https://naver.me/xLNcE4R1', extraLink: 'https://www.facebook.com/profile/100063598005603/search/?q=%200507-1437-1684&locale=zh_TW' },
@@ -325,10 +326,10 @@
                 { location: '海雲台', name: 'Who\'s Who Mumu麵包店', date: '推薦', time: '', desc: '點心/麵包', addr: 'https://naver.me/5PWK2YeK', extraLink: 'https://www.instagram.com/reel/DWNmbuREYgt/' },
                 { location: '海雲台', name: '海雲台鱈魚湯', date: '6/27 (Day 2)', time: '17:30', desc: '晚餐', addr: 'https://naver.me/Gi0EVli7', extraLink: 'https://www.instagram.com/reel/DPlrXCGiRaw/' },
                 { location: '青沙浦', name: '青沙浦大麥拌飯(烤黃魚)', date: '6/27 (Day 2)', time: '13:00', desc: '中餐', addr: 'https://naver.me/FYrPoFi6', extraLink: 'https://vivawei.tw/og-ibolibab/' },
-                { location: '南浦洞', name: '明星一隻雞', date: '6/28 (Day 3)', time: '18:00', desc: '晚餐', addr: 'https://naver.me/FiPZcZsq' },
-                { location: '機張', name: '機張-血蛤定食', date: '6/29 (Day 4)', time: '12:00', desc: '中餐', addr: 'https://naver.me/xnOT99Fz' },
-                { location: '西面', name: '秀英本家豬肉湯飯', date: '6/30 (Day 5)', time: '12:30', desc: '中餐', addr: 'https://naver.me/F5swWRTD' },
-                { location: '西面', name: '西面-肥腸花Pil Muryeop', date: '6/30 (Day 5)', time: '17:30', desc: '晚餐', addr: 'https://naver.me/5QsrSiBG' }
+                { location: '南浦洞', name: '明星一隻雞', date: '6/28 (Day 3)', time: '18:00', desc: '晚餐', addr: 'https://naver.me/FiPZcZsq', extraLink: 'https://www.youtube.com/watch?v=deob0v8gKxs' },
+                { location: '機張', name: '機張-血蛤定食', date: '6/29 (Day 4)', time: '12:00', desc: '中餐', addr: 'https://naver.me/xnOT99Fz', extraLink: 'https://www.youtube.com/watch?v=deob0v8gKxs' },
+                { location: '西面', name: '秀英本家豬肉湯飯', date: '6/30 (Day 5)', time: '12:30', desc: '中餐', addr: 'https://naver.me/F5swWRTD', extraLink: 'https://www.instagram.com/reel/C-hpXLcvsva/' },
+                { location: '西面', name: '西面-肥腸花Pil Muryeop', date: '6/30 (Day 5)', time: '17:30', desc: '晚餐', addr: 'https://naver.me/5QsrSiBG', extraLink: 'https://www.instagram.com/reel/DNiJAKOTNuc/' }
             ],
             taxiFares: [
                 { date: '6/27 (D2)', time: '10:00', route: '廣安里飯店 - 膠囊列車尾浦站', duration: '25min', krw: '9,900', twd: '196.36', krwToll: '', twdToll: '' },
@@ -456,6 +457,7 @@
                 const highlightClass = item.highlight ? 'text-ocean-blue' : 'text-gray-400';
                 const uniqueId = `${day}-${index}`;
                 
+                // 跳脫單引號以免 onclick 報錯
                 const safeAddr = item.addr ? item.addr.replace(/'/g, "\\'") : '';
                 
                 let mapBtnHTML = '';
@@ -532,6 +534,7 @@
             let grandTotalKrw = 0;
             let grandTotalTwd = 0;
             
+            // 用來過濾同一天相同項目的 Map (key: date + route)
             let dailyAggregated = new Map();
 
             tripData.taxiFares.forEach((fare) => {
@@ -623,7 +626,7 @@
 
         // ================= 導覽 =================
         function renderGuide(container) {
-            const locationOrder = ['廣安里', '海雲台', '青沙浦', '機張', '西面', '南浦洞'];
+            const locationOrder = ['西面', '廣安里', '海雲台', '青沙浦', '機張', '南浦洞'];
             const restaurantsByLocation = {};
             
             locationOrder.forEach(location => {
@@ -928,6 +931,11 @@
                             <div class="text-xs text-gray-600 mb-1">駐韓國台北代表部 釜山辦事處</div>
                             <div class="font-bold text-sm text-muji-text font-mono"><i class="fa-solid fa-phone mr-2"></i>+82-51-463-7965</div>
                             <div class="text-[10px] text-gray-400 mt-1">急難救助專線：+82-10-4537-7961</div>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-xl border border-gray-200">
+                            <div class="text-xs text-gray-600 mb-1">韓國旅遊諮詢翻譯熱線</div>
+                            <div class="font-bold text-sm text-muji-text font-mono"><i class="fa-solid fa-headset mr-2"></i>1330</div>
+                            <div class="text-[10px] text-gray-400 mt-1">24小時提供中/英/日等多國語言服務</div>
                         </div>
                     </div>
                 </div>
