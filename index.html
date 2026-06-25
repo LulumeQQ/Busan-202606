@@ -366,6 +366,7 @@
         let checklistState = JSON.parse(localStorage.getItem('busan0704_checklist')) || {};
         let customChecklistItems = JSON.parse(localStorage.getItem('busan0704_custom_items')) || [];
         let deletedListItems = JSON.parse(localStorage.getItem('busan0704_deleted_items')) || {};
+        let currentWalletDate = new Date().toISOString().split('T')[0];
 
         const icons = {
             transport: 'fa-car-side',
@@ -698,7 +699,6 @@
         function renderWallet(container) {
             const totalKrw = expenses.reduce((sum, item) => sum + item.amount, 0);
             const totalTwd = Math.round(totalKrw * walletRate);
-            const todayStr = new Date().toISOString().split('T')[0];
 
             container.innerHTML = `
             <div class="p-4 space-y-5 animate-fade-in">
@@ -720,8 +720,8 @@
 
                 <div class="bg-white p-5 rounded-2xl shadow-soft">
                     <h3 class="font-bold text-muji-text mb-3 border-l-4 border-ocean-blue pl-2">新增消費</h3>
-                    <div class="space-y-3">
-                        <input type="date" id="exp-date" value="${todayStr}" class="muji-input">
+                    <div class="space-y-3 flex flex-col">
+                        <input type="date" id="exp-date" value="${currentWalletDate}" class="muji-input">
                         <input type="text" id="exp-name" placeholder="品項名稱 (例：買水)" class="muji-input">
                         <input type="number" id="exp-amount" placeholder="金額 (韓幣)" class="muji-input">
                         <button onclick="addExpense()" class="w-full bg-ocean-blue text-white px-6 py-3 rounded-xl shadow-md font-bold active:scale-95 transition-transform">儲存紀錄</button>
@@ -791,6 +791,7 @@
             if(dateInput) {
                  const [y, m, d] = dateInput.split('-');
                  displayDate = `${parseInt(m)}/${parseInt(d)}`;
+                 currentWalletDate = dateInput;
             }
 
             const newExp = {
@@ -814,7 +815,7 @@
         function renderLists(container) {
             let displayLuggageItems = tripData.checklist.luggage.items;
             if (customChecklistItems.length > 0) {
-                displayLuggageItems = [...customChecklistItems, ...displayLuggageItems];
+                displayLuggageItems = [...displayLuggageItems, ...customChecklistItems];
             }
             const list = { ...tripData.checklist.luggage, items: displayLuggageItems };
             
